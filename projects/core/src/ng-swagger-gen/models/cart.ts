@@ -1,0 +1,48 @@
+/* tslint:disable */
+import { PaymentDetails } from './payment-details';
+import { PromotionResult } from './promotion-result';
+import { Voucher } from './voucher';
+import { Address } from './address';
+import { Price } from './price';
+import { DeliveryMode } from './delivery-mode';
+import { DeliveryOrderEntryGroup } from './delivery-order-entry-group';
+import { OrderEntry } from './order-entry';
+import { PickupOrderEntryGroup } from './pickup-order-entry-group';
+import { Principal } from './principal';
+export interface Cart {
+  paymentInfo?: PaymentDetails;
+  appliedOrderPromotions?: Array<PromotionResult>;
+  appliedVouchers?: Array<Voucher>;
+  calculated?: boolean;
+  code?: string;
+  deliveryAddress?: Address;
+  deliveryCost?: Price;
+  deliveryItemsQuantity?: number;
+  deliveryMode?: DeliveryMode;
+  deliveryOrderGroups?: Array<DeliveryOrderEntryGroup>;
+  description?: string;
+  entries?: Array<OrderEntry>;
+  expirationTime?: string;
+  guid?: string;
+  name?: string;
+  net?: boolean;
+  orderDiscounts?: Price;
+  appliedProductPromotions?: Array<PromotionResult>;
+  pickupItemsQuantity?: number;
+  pickupOrderGroups?: Array<PickupOrderEntryGroup>;
+  potentialOrderPromotions?: Array<PromotionResult>;
+  potentialProductPromotions?: Array<PromotionResult>;
+  productDiscounts?: Price;
+  saveTime?: string;
+  savedBy?: Principal;
+  site?: string;
+  store?: string;
+  subTotal?: Price;
+  totalDiscounts?: Price;
+  totalItems?: number;
+  totalPrice?: Price;
+  totalPriceWithTax?: Price;
+  totalTax?: Price;
+  totalUnitCount?: number;
+  user?: Principal;
+}

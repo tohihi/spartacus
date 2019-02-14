@@ -3927,3 +3927,6 @@ export enum Type {
   Product = 'product',
   Order = 'order'
 }
+
+// // spike generated:
+// export * from '../../ng-swagger-gen/models';

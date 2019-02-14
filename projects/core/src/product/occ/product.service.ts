@@ -6,12 +6,17 @@ import { catchError } from 'rxjs/operators';
 
 import { OccConfig } from '../../occ/config/occ-config';
 import { Product, ReviewList, Review } from '../../occ/occ-models/occ.models';
+import { ProductsService } from '../../ng-swagger-gen/services';
 
 const ENDPOINT_PRODUCT = 'products';
 
 @Injectable()
 export class OccProductService {
-  constructor(private http: HttpClient, private config: OccConfig) {}
+  constructor(
+    private http: HttpClient,
+    private config: OccConfig,
+    private occApiProductsService: ProductsService
+  ) {}
 
   protected getProductEndpoint(): string {
     return (
@@ -24,14 +29,27 @@ export class OccProductService {
   }
 
   loadProduct(productCode: string): Observable<Product> {
-    const params = new HttpParams({
-      fromString:
-        'fields=DEFAULT,averageRating,images(FULL),classifications,numberOfReviews'
-    });
+    ///spike old
 
-    return this.http
-      .get(this.getProductEndpoint() + `/${productCode}`, { params: params })
-      .pipe(catchError((error: any) => throwError(error.json())));
+    // const params = new HttpParams({
+    //   fromString:
+    //     'fields=DEFAULT,averageRating,images(FULL),classifications,numberOfReviews'
+    // });
+
+    // return this.http
+    //   .get(this.getProductEndpoint() + `/${productCode}`, { params: params })
+    //   .pipe(catchError((error: any) => throwError(error.json())));
+
+    // spike new:
+    const params = ({
+      productCode,
+      fields:
+        'DEFAULT,averageRating,images(FULL),classifications,numberOfReviews',
+      baseSiteId: this.config.site.baseSite
+    } as any) as ProductsService.GetProductByCodeParams;
+    return (this.occApiProductsService.getProductByCode(
+      params
+    ) as unknown) as Observable<Product>;
   }
 
   loadProductReviews(

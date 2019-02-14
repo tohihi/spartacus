@@ -1,0 +1,44 @@
+/* tslint:disable */
+import { Promotion } from './promotion';
+import { BaseOption } from './base-option';
+import { Category } from './category';
+import { Classification } from './classification';
+import { FutureStock } from './future-stock';
+import { Image } from './image';
+import { Price } from './price';
+import { PriceRange } from './price-range';
+import { ProductReference } from './product-reference';
+import { Review } from './review';
+import { Stock } from './stock';
+import { VariantMatrixElement } from './variant-matrix-element';
+import { VariantOption } from './variant-option';
+export interface Product {
+  potentialPromotions?: Array<Promotion>;
+  availableForPickup?: boolean;
+  baseOptions?: Array<BaseOption>;
+  baseProduct?: string;
+  categories?: Array<Category>;
+  classifications?: Array<Classification>;
+  code?: string;
+  description?: string;
+  futureStocks?: Array<FutureStock>;
+  images?: Array<Image>;
+  manufacturer?: string;
+  multidimensional?: boolean;
+  name?: string;
+  numberOfReviews?: number;
+  averageRating?: number;
+  price?: Price;
+  priceRange?: PriceRange;
+  productReferences?: Array<ProductReference>;
+  purchasable?: boolean;
+  reviews?: Array<Review>;
+  stock?: Stock;
+  summary?: string;
+  url?: string;
+  variantMatrix?: Array<VariantMatrixElement>;
+  variantOptions?: Array<VariantOption>;
+  variantType?: string;
+  volumePrices?: Array<Price>;
+  volumePricesFlag?: boolean;
+}

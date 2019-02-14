@@ -17,6 +17,7 @@ import {
   provideConfigValidator,
   validateConfig
 } from './utils/config-validator';
+import { OccApiConfiguration } from '../ng-swagger-gen/occ-api-configuration';
 
 export const Config = new InjectionToken('Configuration');
 export const ConfigChunk = new InjectionToken('ConfigurationChunk');
@@ -46,6 +47,15 @@ export function configurationFactory(
     validateConfig(config, configValidators);
   }
   return config;
+}
+
+export function occApiConfigurationFactory(
+  config: ServerConfig
+): OccApiConfiguration {
+  const occBasePath = config.server.baseUrl + config.server.occPrefix;
+  const occApiConfiguration = new OccApiConfiguration();
+  occApiConfiguration.rootUrl = occBasePath.slice(0, -1); // remove last slash, because OccApi client adds it
+  return occApiConfiguration;
 }
 
 @NgModule({
@@ -82,7 +92,12 @@ export class ConfigModule {
           useFactory: configurationFactory,
           deps: [ConfigChunk, ConfigValidatorToken]
         },
-        provideConfigValidator(serverConfigValidator)
+        provideConfigValidator(serverConfigValidator),
+        {
+          provide: OccApiConfiguration,
+          useFactory: occApiConfigurationFactory,
+          deps: [ServerConfig]
+        }
       ]
     };
   }
