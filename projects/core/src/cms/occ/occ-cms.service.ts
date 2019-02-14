@@ -11,12 +11,17 @@ import {
   CmsComponent,
   CmsComponentList
 } from '../../occ/occ-models/index';
+import { PageService } from '../../ng-swagger-gen/services/page.service';
 
 @Injectable()
 export class OccCmsService {
   protected headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  constructor(private http: HttpClient, private config: CmsConfig) {}
+  constructor(
+    private http: HttpClient,
+    private config: CmsConfig,
+    private pageService: PageService
+  ) {}
 
   protected getBaseEndPoint(): string {
     return (
@@ -28,26 +33,40 @@ export class OccCmsService {
   }
 
   loadPageData(pageContext: PageContext, fields?: string): Observable<CMSPage> {
-    let httpStringParams = 'pageType=' + pageContext.type;
+    // let httpStringParams = 'pageType=' + pageContext.type;
 
-    if (pageContext.type === PageType.CONTENT_PAGE) {
-      httpStringParams = httpStringParams + '&pageLabelOrId=' + pageContext.id;
-    } else {
-      httpStringParams = httpStringParams + '&code=' + pageContext.id;
-    }
+    // if (pageContext.type === PageType.CONTENT_PAGE) {
+    //   httpStringParams = httpStringParams + '&pageLabelOrId=' + pageContext.id;
+    // } else {
+    //   httpStringParams = httpStringParams + '&code=' + pageContext.id;
+    // }
 
-    if (fields !== undefined) {
-      httpStringParams = httpStringParams + '&fields=' + fields;
-    }
+    // if (fields !== undefined) {
+    //   httpStringParams = httpStringParams + '&fields=' + fields;
+    // }
 
-    return this.http
-      .get(this.getBaseEndPoint() + `/pages`, {
-        headers: this.headers,
-        params: new HttpParams({
-          fromString: httpStringParams
-        })
-      })
-      .pipe(catchError((error: any) => throwError(error.json())));
+    // return this.http
+    //   .get(this.getBaseEndPoint() + `/pages`, {
+    //     headers: this.headers,
+    //     params: new HttpParams({
+    //       fromString: httpStringParams
+    //     })
+    //   })
+    //   .pipe(catchError((error: any) => throwError(error.json())));
+
+    let params: PageService.GetPageDataParams = ({
+      baseSiteId: this.config.site.baseSite,
+      pageType: pageContext.type,
+      fields
+    } as unknown) as PageService.GetPageDataParams; //spike workaround
+    params =
+      pageContext.type === PageType.CONTENT_PAGE
+        ? { ...params, pageLabelOrId: pageContext.id }
+        : { ...params, code: pageContext.id };
+
+    return (this.pageService.getPageData(params) as unknown) as Observable<
+      CMSPage
+    >;
   }
 
   loadComponent<T extends CmsComponent>(

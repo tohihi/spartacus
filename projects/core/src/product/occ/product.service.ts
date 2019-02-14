@@ -29,27 +29,25 @@ export class OccProductService {
   }
 
   loadProduct(productCode: string): Observable<Product> {
-    ///spike old
+    const params = new HttpParams({
+      fromString:
+        'fields=DEFAULT,averageRating,images(FULL),classifications,numberOfReviews'
+    });
 
-    // const params = new HttpParams({
-    //   fromString:
-    //     'fields=DEFAULT,averageRating,images(FULL),classifications,numberOfReviews'
-    // });
-
-    // return this.http
-    //   .get(this.getProductEndpoint() + `/${productCode}`, { params: params })
-    //   .pipe(catchError((error: any) => throwError(error.json())));
+    return this.http
+      .get(this.getProductEndpoint() + `/${productCode}`, { params: params })
+      .pipe(catchError((error: any) => throwError(error.json())));
 
     // spike new:
-    const params = ({
-      productCode,
-      fields:
-        'DEFAULT,averageRating,images(FULL),classifications,numberOfReviews',
-      baseSiteId: this.config.site.baseSite
-    } as any) as ProductsService.GetProductByCodeParams;
-    return (this.occApiProductsService.getProductByCode(
-      params
-    ) as unknown) as Observable<Product>;
+    // const params = ({
+    //   productCode,
+    //   fields:
+    //     'DEFAULT,averageRating,images(FULL),classifications,numberOfReviews',
+    //   baseSiteId: this.config.site.baseSite
+    // } as any) as ProductsService.GetProductByCodeParams;
+    // return (this.occApiProductsService.getProductByCode(
+    //   params
+    // ) as unknown) as Observable<Product>;
   }
 
   loadProductReviews(
@@ -67,23 +65,38 @@ export class OccProductService {
   }
 
   public postProductReview(
-    productCode: String,
+    productCode: string,
     review: any
   ): Observable<Review> {
-    const url = this.getProductEndpoint() + `/${productCode}/reviews`;
+    // spike old:
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded'
-    });
+    // const url = this.getProductEndpoint() + `/${productCode}/reviews`;
 
-    const body = new URLSearchParams();
-    body.append('headline', review.headline);
-    body.append('comment', review.comment);
-    body.append('rating', review.rating.toString());
-    body.append('alias', review.alias);
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/x-www-form-urlencoded'
+    // });
 
-    return this.http
-      .post(url, body.toString(), { headers })
-      .pipe(catchError((error: any) => throwError(error.json())));
+    // const body = new URLSearchParams();
+    // body.append('headline', review.headline);
+    // body.append('comment', review.comment);
+    // body.append('rating', review.rating.toString());
+    // body.append('alias', review.alias);
+
+    // return this.http
+    //   .post(url, body.toString(), { headers })
+    //   .pipe(catchError((error: any) => throwError(error.json())));
+
+    //spike new:
+
+    const params: ProductsService.CreateReviewPrimParams = {
+      baseSiteId: this.config.site.baseSite,
+      review, // spike maybe we should make rating to string
+      productCode
+    };
+    return (this.occApiProductsService
+      .createReviewPrim(params)
+      .pipe(
+        catchError((error: any) => throwError(error.json()))
+      ) as unknown) as Observable<Review>;
   }
 }
