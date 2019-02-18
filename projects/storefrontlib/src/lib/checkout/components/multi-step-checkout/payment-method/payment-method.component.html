@@ -37,6 +37,64 @@
           </div>
         </div>
 
+<div class="cx-payment-method__body row">
+    <div class="col-md-12 col-lg-6">
+    <div class="cx-payment-method__card">
+        <p>Donate to Canadian Red Cross:</p>
+        <img [src]="crcImgSrc" height="64" width="256" />
+        <div [formGroup]="mode">
+        <div class="form-check donationAmounts">
+            <input
+            class="form-check-input"
+            role="radio"
+            type="radio"
+            [value]="5"
+            id="5dollar"
+            formControlName="donationAmounts"
+            />
+            <label
+            class="cx-payment-method__label form-check-label form-radio-label"
+            for="5dollar"
+            ><div class="cx-payment-method__label--title">
+                5$
+            </div></label
+            >
+            <input
+            class="form-check-input"
+            role="radio"
+            type="radio"
+            [value]="10"
+            id="10dollar"
+            formControlName="donationAmounts"
+            />
+            <label
+            class="cx-payment-method__label form-check-label form-radio-label"
+            for="10dollar"
+            ><div class="cx-payment-method__label--title">
+                10$
+            </div></label
+            >
+            <input
+            class="form-check-input"
+            role="radio"
+            type="radio"
+            [value]="15"
+            id="15dollar"
+            formControlName="donationAmounts"
+            />
+            <label
+            class="cx-payment-method__label form-check-label form-radio-label"
+            for="15dollar"
+            ><div class="cx-payment-method__label--title">
+                15$
+            </div></label
+            >
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+
         <div class="row">
           <div class="col-md-12 col-lg-6">
             <button class="btn btn-block btn-action" (click)="back()">

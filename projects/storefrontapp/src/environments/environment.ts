@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  occBaseUrl: ''
+  occBaseUrl:
+    'https://electronics.cqz1m-softwarea1-s1-public.model-t.cc.commerce.ondemand.com'
 };

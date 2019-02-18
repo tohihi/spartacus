@@ -86,7 +86,6 @@ export class ReviewSubmitComponent implements OnInit {
         this.deliveryAddress.firstName + ' ' + this.deliveryAddress.lastName,
       text: [
         this.deliveryAddress.line1,
-        this.deliveryAddress.line2,
         this.deliveryAddress.town + ', ' + region + countryName,
         this.deliveryAddress.postalCode,
         this.deliveryAddress.phone
@@ -115,6 +114,14 @@ export class ReviewSubmitComponent implements OnInit {
           '/' +
           this.paymentDetails.expiryYear
       ]
+    };
+  }
+
+  getDonationAmountCard(): Card {
+    return {
+      title: 'Donation to',
+      textBold: 'Canadian Red Cross',
+      text: [this.deliveryAddress.line2 + '$']
     };
   }
 }

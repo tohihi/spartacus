@@ -17,6 +17,8 @@ import { tap } from 'rxjs/operators';
 import { masterCardImgSrc } from '../../../../ui/images/masterCard';
 import { visaImgSrc } from '../../../../ui/images/visa';
 import { Card } from '../../../../ui/components/card/card.component';
+import { crcImgSrc } from '../../../../ui/images/crc';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'cx-payment-method',
@@ -37,9 +39,15 @@ export class PaymentMethodComponent implements OnInit {
   @Output()
   addPaymentInfo = new EventEmitter<any>();
 
+  mode: FormGroup = this.fb.group({
+    donationAmounts: ['', Validators.required]
+  });
+
+  crcImgSrc = crcImgSrc;
   constructor(
     protected cartData: CartDataService,
-    protected userService: UserService
+    protected userService: UserService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -101,7 +109,8 @@ export class PaymentMethodComponent implements OnInit {
   next(): void {
     this.addPaymentInfo.emit({
       payment: this.selectedPayment,
-      newPayment: false
+      newPayment: false,
+      donationAmount: this.mode.value
     });
   }
 

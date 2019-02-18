@@ -2,6 +2,41 @@
 @import '../container/multi-step-checkout.component';
 
 .cx-payment {
+// cx-payment-method color variables
+$cx-payment-method-media-background-color: 'background' !default;
+$cx-payment-method-tooltip-icon-text-color: $inverse !default;
+$cx-payment-method-card-background-color: $inverse !default;
+// cx-payment-method  variables
+$cx-payment-method-no-padding: 0 !default;
+$cx-payment-method-margin: 0 auto 0 0.75rem !default;
+$cx-payment-method-no-margin: 0 !default;
+$cx-payment-method-header-margin: 0 auto !default;
+$cx-payment-method-header-padding: 2.375rem 0 1.25rem 0 !default;
+$cx-payment-method-header-title-margin-bottom: 0 !default;
+$cx-payment-method-header-image-margin-left: 1rem !default;
+$cx-payment-method-tooltip-icon-margin-left: 0.625rem !default;
+$cx-payment-method-tooltip-icon-size: 1.125rem !default;
+$cx-payment-method-billing-margin-bottom: 1.25rem !default;
+$cx-payment-method-billing-address-padding: 0.875rem 0 1.25rem 0 !default;
+$cx-payment-method-img-margin: 0 1rem 1.25rem 0 !default;
+$cx-payment-method-title-margin: 0 auto !default;
+$cx-payment-method-title-padding: 2.375rem 0 1.75rem 0 !default;
+$cx-payment-method-body-padding-bottom: 1.875rem !default;
+// Media Queries
+$cx-payment-method-text-md-padding-left: 3.5rem !default;
+$cx-payment-method-text-sm-padding-left: 1.5rem !default;
+$cx-payment-method-text-md-padding-left: 3.5rem !default;
+$cx-payment-method-header-image-md-margin-right: 1rem !default;
+$cx-payment-method-header-image-md-margin-left: 0 !default;
+$cx-payment-method-btns-margin-bottom: 1rem !default;
+// Loading
+$cx-payment-methods-loading-padding: 30px !default;
+
+.donationAmounts {
+  float: right;
+  margin-top: -75px;
+}
+.cx-payment-method {
   &.container {
     padding: var(--cx-padding, 0);
   }
@@ -18,6 +53,55 @@
 .cx-payment-text {
   @include media-breakpoint-down(md) {
     padding-left: var(--cx-padding, 3.5rem);
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin: $cx-payment-method-header-margin;
+    padding: $cx-payment-method-header-padding;
+    &-title {
+      text-transform: uppercase;
+      margin-bottom: $cx-payment-method-header-title-margin-bottom;
+    }
+    &-image {
+      margin-left: $cx-payment-method-header-image-margin-left;
+    }
+  }
+  &__label {
+    padding: $cx-payment-method-no-padding;
+    margin: $cx-payment-method-margin;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    &--title {
+      flex: 50%;
+    }
+  }
+  &__tooltip-icon {
+    margin-left: $cx-payment-method-tooltip-icon-margin-left;
+    height: $cx-payment-method-tooltip-icon-size;
+    width: $cx-payment-method-tooltip-icon-size;
+  }
+  &__billing {
+    margin-bottom: $cx-payment-method-billing-margin-bottom;
+    &-address {
+      @include type('4');
+      padding: $cx-payment-method-billing-address-padding;
+    }
+  }
+  &__img {
+    margin: $cx-payment-method-img-margin;
+    &-container {
+      display: flex;
+    }
+  }
+  &__title {
+    text-transform: uppercase;
+    margin: $cx-payment-method-title-margin;
+    padding: $cx-payment-method-title-padding;
   }
   @include media-breakpoint-down(sm) {
     padding-left: var(--cx-padding, 1.5rem);
