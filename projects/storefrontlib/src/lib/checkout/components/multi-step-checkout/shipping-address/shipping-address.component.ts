@@ -49,6 +49,9 @@ export class ShippingAddressComponent implements OnInit {
         if (this.cards.length === 0 && addresses) {
           addresses.forEach(address => {
             const card = this.getCardContent(address);
+            if (!this.selectedAddress && address.defaultAddress) {
+              this.selectedAddress = address;
+            }
             if (
               this.selectedAddress &&
               this.selectedAddress.id === address.id

@@ -51,6 +51,9 @@ export class PaymentMethodComponent implements OnInit {
         if (this.cards.length === 0) {
           payments.forEach(payment => {
             const card = this.getCardContent(payment);
+            if (!this.selectedPayment && payment.defaultPayment) {
+              this.selectedPayment = payment;
+            }
             if (
               this.selectedPayment &&
               this.selectedPayment.id === payment.id
