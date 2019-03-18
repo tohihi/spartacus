@@ -40,7 +40,7 @@ export class PaymentMethodComponent implements OnInit {
   constructor(
     protected cartData: CartDataService,
     protected userService: UserService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.isLoading$ = this.userService.getPaymentMethodsLoading();
@@ -53,6 +53,7 @@ export class PaymentMethodComponent implements OnInit {
             const card = this.getCardContent(payment);
             if (!this.selectedPayment && payment.defaultPayment) {
               this.selectedPayment = payment;
+              this.next();
             }
             if (
               this.selectedPayment &&

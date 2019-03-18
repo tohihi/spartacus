@@ -38,7 +38,7 @@ export class ShippingAddressComponent implements OnInit {
     protected userService: UserService,
     protected cartData: CartDataService,
     protected routingService: RoutingService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.isLoading$ = this.userService.getAddressesLoading();
@@ -51,6 +51,7 @@ export class ShippingAddressComponent implements OnInit {
             const card = this.getCardContent(address);
             if (!this.selectedAddress && address.defaultAddress) {
               this.selectedAddress = address;
+              this.next();
             }
             if (
               this.selectedAddress &&

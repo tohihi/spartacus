@@ -35,7 +35,7 @@ export class DeliveryModeComponent implements OnInit {
     deliveryModeId: ['', Validators.required]
   });
 
-  constructor(private fb: FormBuilder, private service: CheckoutService) {}
+  constructor(private fb: FormBuilder, private service: CheckoutService) { }
 
   ngOnInit() {
     this.supportedDeliveryModes$ = this.service
@@ -50,7 +50,12 @@ export class DeliveryModeComponent implements OnInit {
               this.mode.controls['deliveryModeId'].setValue(
                 this.selectedShippingMethod
               );
+            } else {
+              this.mode.controls['deliveryModeId'].setValue(
+                supportedModes[supportedModes.length - 1].code
+              );
             }
+            this.next();
           }
         })
       );
