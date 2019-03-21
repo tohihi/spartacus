@@ -15,11 +15,12 @@ import {
   CartDataService,
   PaymentDetails,
   Address,
-  Cart
+  Cart,
+  UserService
 } from '@spartacus/core';
 
-import { Subscription, Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { Subscription, Observable, from } from 'rxjs';
+import { filter, mergeMap } from 'rxjs/operators';
 
 import { CheckoutNavBarItem } from './checkout-navigation-bar';
 
@@ -48,82 +49,173 @@ export class MultiStepCheckoutComponent implements OnInit, OnDestroy {
     protected cartService: CartService,
     protected cartDataService: CartDataService,
     protected routingService: RoutingService,
+    protected userService: UserService,
     protected globalMessageService: GlobalMessageService,
     protected cd: ChangeDetectorRef
-  ) {}
+  ) { }
 
-  private refreshCart(): void {
-    this.cartService.loadDetails();
-  }
+  // private refreshCart(): void {
+  //   this.cartService.loadDetails();
+  // }
 
   ngOnInit() {
     if (!this.cartDataService.getDetails) {
       this.cartService.loadDetails();
     }
     this.cart$ = this.cartService.getActive();
+    this._processSteps();
     this.processSteps();
   }
 
-  processSteps(): void {
+  _processSteps(): void {
     // step1: set delivery address
     this.subscriptions.push(
-      this.checkoutService
-        .getDeliveryAddress()
-        .pipe(
-          filter(
-            deliveryAddress =>
-              Object.keys(deliveryAddress).length !== 0 && this.step === 1
-          )
-        )
-        .subscribe(deliveryAddress => {
-          this.deliveryAddress = deliveryAddress;
-          this.nextStep(2);
-          this.refreshCart();
-          this.cd.detectChanges();
+      this.userService.getAddresses()
+        .pipe(filter(_ => this.step === 1))
+        .subscribe(deliveryAddresses => {
+          console.log('delivery address');
+          console.log(deliveryAddresses);
+          if (deliveryAddresses) {
+            deliveryAddresses.forEach(address => {
+              if (address.defaultAddress) {
+                console.log('default');
+                this.addAddress({ address: address, newAddress: false });
+                // this.step = 2;
+                this.nextStep(2);
+                this.cd.detectChanges();
+                this.deliveryAddress = address;
+              }
+            });
+          }
         })
     );
 
     // step2: select delivery mode
     this.subscriptions.push(
       this.checkoutService
-        .getSelectedDeliveryModeCode()
-        .pipe(filter(selected => selected !== '' && this.step === 2))
-        .subscribe(selectedMode => {
-          this.nextStep(3);
-          this.refreshCart();
-          this.shippingMethod = selectedMode;
-          this.cd.detectChanges();
+        .getSupportedDeliveryModes()
+        .pipe(filter(_ => this.step === 2))
+        .subscribe(supportedModes => {
+          if (Object.keys(supportedModes).length === 0) {
+            this.checkoutService.loadSupportedDeliveryModes();
+          } else {
+            this.setDeliveryMode({ 'deliveryModeId': supportedModes[supportedModes.length - 1].code });
+            // this.step = 3;
+            this.nextStep(3);
+            this.cd.detectChanges();
+            this.shippingMethod = supportedModes[supportedModes.length - 1].code;
+          }
         })
     );
 
     // step3: set payment information
     this.subscriptions.push(
-      this.checkoutService
-        .getPaymentDetails()
-        .pipe(
-          filter(
-            paymentInfo =>
-              Object.keys(paymentInfo).length !== 0 && this.step === 3
-          )
-        )
-        .subscribe(paymentInfo => {
-          if (!paymentInfo['hasError']) {
-            this.nextStep(4);
-            this.paymentDetails = paymentInfo;
-            this.cd.detectChanges();
-          } else {
-            Object.keys(paymentInfo).forEach(key => {
-              if (key.startsWith('InvalidField')) {
-                this.globalMessageService.add({
-                  type: GlobalMessageType.MSG_TYPE_ERROR,
-                  text: 'InvalidField: ' + paymentInfo[key]
-                });
-              }
-            });
-            this.checkoutService.clearCheckoutStep(3);
-          }
-        })
+      this.userService.getPaymentMethods().pipe(
+        filter(_ => this.step === 3),
+        mergeMap(payments => from(payments)),
+        filter(payment => payment.defaultPayment)
+      ).subscribe(paymentInfo => {
+        if (!paymentInfo['hasError']) {
+          this.addPaymentInfo({
+            newPayment: false,
+            payment: paymentInfo,
+            billingAddress: null
+          });
+          this.nextStep(4);
+          this.paymentDetails = paymentInfo;
+          this.cd.detectChanges();
+        } else {
+          Object.keys(paymentInfo).forEach(key => {
+            if (key.startsWith('InvalidField')) {
+              this.globalMessageService.add({
+                type: GlobalMessageType.MSG_TYPE_ERROR,
+                text: 'InvalidField: ' + paymentInfo[key]
+              });
+            }
+          });
+          this.checkoutService.clearCheckoutStep(3);
+        }
+      })
     );
+
+    // // step4: place order
+    // this.subscriptions.push(
+    //   this.checkoutService
+    //     .getOrderDetails()
+    //     .pipe(
+    //       filter(order => Object.keys(order).length !== 0 && this.step === 4)
+    //     )
+    //     .subscribe(() => {
+    //       // checkout steps are done
+    //       this.done = true;
+    //       this.routingService.go({ route: ['orderConfirmation'] });
+    //     })
+    // );
+  }
+
+  processSteps(): void {
+    // // step1: set delivery address
+    // this.subscriptions.push(
+    //   this.checkoutService
+    //     .getDeliveryAddress()
+    //     .pipe(
+    //       filter(
+    //         deliveryAddress =>
+    //           Object.keys(deliveryAddress).length !== 0 && this.step === 1
+    //       )
+    //     )
+    //     .subscribe(deliveryAddress => {
+    //       this.deliveryAddress = deliveryAddress;
+    //       this.nextStep(2);
+    //       this.refreshCart();
+    //       this.cd.detectChanges();
+    //     })
+    // );
+
+    console.log("GOT HERE");
+
+
+    // // step2: select delivery mode
+    // this.subscriptions.push(
+    //   this.checkoutService
+    //     .getSelectedDeliveryModeCode()
+    //     .pipe(filter(selected => selected !== '' && this.step === 2))
+    //     .subscribe(selectedMode => {
+    //       this.nextStep(3);
+    //       this.refreshCart();
+    //       this.shippingMethod = selectedMode;
+    //       this.cd.detectChanges();
+    //     })
+    // );
+
+    // step3: set payment information
+    // this.subscriptions.push(
+    //   this.checkoutService
+    //     .getPaymentDetails()
+    //     .pipe(
+    //       filter(
+    //         paymentInfo =>
+    //           Object.keys(paymentInfo).length !== 0 && this.step === 3
+    //       )
+    //     )
+    //     .subscribe(paymentInfo => {
+    //       if (!paymentInfo['hasError']) {
+    //         this.nextStep(4);
+    //         this.paymentDetails = paymentInfo;
+    //         this.cd.detectChanges();
+    //       } else {
+    //         Object.keys(paymentInfo).forEach(key => {
+    //           if (key.startsWith('InvalidField')) {
+    //             this.globalMessageService.add({
+    //               type: GlobalMessageType.MSG_TYPE_ERROR,
+    //               text: 'InvalidField: ' + paymentInfo[key]
+    //             });
+    //           }
+    //         });
+    //         this.checkoutService.clearCheckoutStep(3);
+    //       }
+    //     })
+    // );
 
     // step4: place order
     this.subscriptions.push(
@@ -138,6 +230,7 @@ export class MultiStepCheckoutComponent implements OnInit, OnDestroy {
           this.routingService.go({ route: ['orderConfirmation'] });
         })
     );
+
   }
 
   setStep(backStep: number): void {
@@ -147,7 +240,7 @@ export class MultiStepCheckoutComponent implements OnInit, OnDestroy {
   nextStep(step: number): void {
     const previousStep = step - 1;
 
-    this.navs.forEach(function(nav) {
+    this.navs.forEach(function (nav) {
       if (nav.id === previousStep) {
         nav.status.completed = true;
       }
