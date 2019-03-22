@@ -53,7 +53,6 @@ export class PaymentMethodComponent implements OnInit {
             const card = this.getCardContent(payment);
             if (!this.selectedPayment && payment.defaultPayment) {
               this.selectedPayment = payment;
-              this.next();
             }
             if (
               this.selectedPayment &&

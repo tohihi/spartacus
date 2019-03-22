@@ -55,7 +55,6 @@ export class DeliveryModeComponent implements OnInit {
                 supportedModes[supportedModes.length - 1].code
               );
             }
-            this.next();
           }
         })
       );

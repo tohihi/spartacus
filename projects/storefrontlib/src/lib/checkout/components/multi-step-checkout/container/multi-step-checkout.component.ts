@@ -20,7 +20,7 @@ import {
 } from '@spartacus/core';
 
 import { Subscription, Observable, from } from 'rxjs';
-import { filter, mergeMap } from 'rxjs/operators';
+import { filter, mergeMap, first } from 'rxjs/operators';
 
 import { CheckoutNavBarItem } from './checkout-navigation-bar';
 
@@ -70,10 +70,11 @@ export class MultiStepCheckoutComponent implements OnInit, OnDestroy {
   _processSteps(): void {
     // step1: set delivery address
     this.subscriptions.push(
+      // Non-stream approach
       this.userService.getAddresses()
         .pipe(filter(_ => this.step === 1))
         .subscribe(deliveryAddresses => {
-          console.log('delivery address');
+          console.log('delivery addresses');
           console.log(deliveryAddresses);
           if (deliveryAddresses) {
             deliveryAddresses.forEach(address => {
@@ -84,6 +85,9 @@ export class MultiStepCheckoutComponent implements OnInit, OnDestroy {
                 this.nextStep(2);
                 this.cd.detectChanges();
                 this.deliveryAddress = address;
+
+                // TODO what is a cleaner way to do this?
+                this.subscriptions[0].unsubscribe();
               }
             });
           }
@@ -104,16 +108,18 @@ export class MultiStepCheckoutComponent implements OnInit, OnDestroy {
             this.nextStep(3);
             this.cd.detectChanges();
             this.shippingMethod = supportedModes[supportedModes.length - 1].code;
+            this.subscriptions[1].unsubscribe();
           }
         })
     );
 
     // step3: set payment information
     this.subscriptions.push(
+      // Stream approach
       this.userService.getPaymentMethods().pipe(
         filter(_ => this.step === 3),
         mergeMap(payments => from(payments)),
-        filter(payment => payment.defaultPayment)
+        first(payment => payment.defaultPayment)
       ).subscribe(paymentInfo => {
         if (!paymentInfo['hasError']) {
           this.addPaymentInfo({
@@ -124,6 +130,7 @@ export class MultiStepCheckoutComponent implements OnInit, OnDestroy {
           this.nextStep(4);
           this.paymentDetails = paymentInfo;
           this.cd.detectChanges();
+          this.subscriptions[2].unsubscribe();
         } else {
           Object.keys(paymentInfo).forEach(key => {
             if (key.startsWith('InvalidField')) {

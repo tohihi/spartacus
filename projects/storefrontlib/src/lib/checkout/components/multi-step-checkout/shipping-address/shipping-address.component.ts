@@ -51,7 +51,6 @@ export class ShippingAddressComponent implements OnInit {
             const card = this.getCardContent(address);
             if (!this.selectedAddress && address.defaultAddress) {
               this.selectedAddress = address;
-              this.next();
             }
             if (
               this.selectedAddress &&
