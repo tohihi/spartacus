@@ -7,6 +7,7 @@ import { TranslationService } from './translation.service';
 import { provideConfig, Config } from '../config/config.module';
 import { I18nextTranslationService } from './i18next/i18next-translation.service';
 import { DatePipe } from './date.pipe';
+import { dynamicRegisterLocaleProvider } from './dynamic-register-locale-provider';
 
 @NgModule({
   declarations: [TranslatePipe, DatePipe],
@@ -20,7 +21,8 @@ export class I18nModule {
         provideConfig(defaultI18nConfig),
         { provide: I18nConfig, useExisting: Config },
         { provide: TranslationService, useClass: I18nextTranslationService },
-        ...i18nextProviders
+        ...i18nextProviders,
+        dynamicRegisterLocaleProvider
       ]
     };
   }
