@@ -21,7 +21,7 @@ export class OrderDetailShippingComponent implements OnInit {
 
   getAddressCardContent(address: Address): Card {
     return {
-      title: 'Ship to',
+      title: 'orderDetails.shipTo',
       textBold: `${address.firstName} ${address.lastName}`,
       text: [
         address.line1,
@@ -34,7 +34,7 @@ export class OrderDetailShippingComponent implements OnInit {
 
   getBillingAddressCardContent(billingAddress: Address): Card {
     return {
-      title: 'Bill To',
+      title: 'orderDetails.billTo',
       textBold: `${billingAddress.firstName} ${billingAddress.lastName}`,
       text: [
         billingAddress.line1,
@@ -49,7 +49,7 @@ export class OrderDetailShippingComponent implements OnInit {
 
   getPaymentCardContent(payment: PaymentDetails): Card {
     return {
-      title: 'Payment',
+      title: 'orderDetails.payment',
       textBold: payment.accountHolderName,
       text: [
         payment.cardType.name,
@@ -61,7 +61,7 @@ export class OrderDetailShippingComponent implements OnInit {
 
   getShippingMethodCardContent(shipping: DeliveryMode): Card {
     return {
-      title: 'Shipping Method',
+      title: 'orderDetails.deliveryMode',
       textBold: shipping.name,
       text: [shipping.description],
     };

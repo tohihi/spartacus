@@ -30,6 +30,6 @@ export class BreadcrumbComponent {
     // initial version for the breadcrumb
     // this must be done in such a way that
     // other pages can contribute to a stream of crumbs
-    return of([{ label: 'Home', link: '/' }]);
+    return of([{ label: 'breadcrumbs.home', link: '/' }]);
   }
 }

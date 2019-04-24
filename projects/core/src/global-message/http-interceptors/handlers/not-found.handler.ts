@@ -12,7 +12,7 @@ export class NotFoundHandler extends HttpErrorHandler {
   handleError() {
     this.globalMessageService.add({
       type: GlobalMessageType.MSG_TYPE_ERROR,
-      text: 'The requested resource could not be found',
+      text: 'globalMessage.notFound',
     });
   }
 }

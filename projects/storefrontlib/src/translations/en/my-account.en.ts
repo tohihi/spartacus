@@ -5,6 +5,10 @@ export const myAccount = {
     status: 'Status',
     shippedOn: 'Shipped on',
     inProcess: 'In process...',
+    shipTo: 'Ship to',
+    billTo: 'Bill to',
+    payment: 'Payment',
+    deliveryMode: 'Shipping Method',
   },
   orderHistory: {
     orderHistory: 'Order history',
@@ -15,5 +19,7 @@ export const myAccount = {
     noOrders: 'We have no order records for this account.',
     startShopping: 'Start Shopping',
     sortByMostRecent: 'Sort by Most recent',
+    byDate: 'Date',
+    byOrderNumber: 'Order Number',
   },
 };

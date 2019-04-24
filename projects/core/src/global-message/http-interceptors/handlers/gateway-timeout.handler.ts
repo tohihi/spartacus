@@ -12,7 +12,7 @@ export class GatewayTimeoutHandler extends HttpErrorHandler {
   handleError() {
     this.globalMessageService.add({
       type: GlobalMessageType.MSG_TYPE_ERROR,
-      text: 'The server did not responded, please try again later.',
+      text: 'globalMessage.serverNotResponded',
     });
   }
 }

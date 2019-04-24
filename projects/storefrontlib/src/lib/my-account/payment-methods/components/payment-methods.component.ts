@@ -36,15 +36,15 @@ export class PaymentMethodsComponent implements OnInit, OnDestroy {
   }: PaymentDetails): Card {
     const actions: { name: string; event: string }[] = [];
     if (!defaultPayment) {
-      actions.push({ name: 'Set as default', event: 'default' });
+      actions.push({ name: 'paymentForm.saveAsDefault', event: 'default' });
     }
-    actions.push({ name: 'Delete', event: 'edit' });
+    actions.push({ name: 'paymentMethods.delete', event: 'edit' });
     const card: Card = {
       header: defaultPayment ? 'DEFAULT' : null,
       textBold: accountHolderName,
       text: [cardNumber, `Expires: ${expiryMonth}/${expiryYear}`],
       actions,
-      deleteMsg: 'Are you sure you want to delete this payment method?',
+      deleteMsg: 'paymentMethods.deleteMsg',
     };
 
     return card;

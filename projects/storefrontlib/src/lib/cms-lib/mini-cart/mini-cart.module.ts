@@ -11,6 +11,7 @@ import {
   CmsConfig,
   UrlTranslationModule,
   CartModule,
+  I18nModule,
 } from '@spartacus/core';
 
 @NgModule({
@@ -26,6 +27,7 @@ import {
       },
     }),
     UrlTranslationModule,
+    I18nModule,
   ],
   declarations: [MiniCartComponent],
   entryComponents: [MiniCartComponent],

@@ -9,10 +9,13 @@ export const defaultI18nConfig: I18nConfig = {
       spinner: 'common',
       header: 'common',
       searchBox: 'common',
+      breadcrumbs: 'common',
+      globalMessage: 'common',
 
       cartDetails: 'cart',
       cartItems: 'cart',
       orderCost: 'cart',
+      miniCart: 'cart',
 
       addressForm: 'address',
       addressBook: 'address',

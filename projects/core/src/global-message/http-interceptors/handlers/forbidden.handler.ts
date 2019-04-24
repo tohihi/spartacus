@@ -12,7 +12,7 @@ export class ForbiddenHandler extends HttpErrorHandler {
   handleError() {
     this.globalMessageService.add({
       type: GlobalMessageType.MSG_TYPE_ERROR,
-      text: 'You are not authorized to perform this action.',
+      text: 'globalMessage.notAuthorized',
     });
   }
 }

@@ -12,7 +12,7 @@ export class ConflictHandler extends HttpErrorHandler {
   handleError() {
     this.globalMessageService.add({
       type: GlobalMessageType.MSG_TYPE_ERROR,
-      text: 'Already exists',
+      text: 'globalMessage.alreadyExists',
     });
   }
 }

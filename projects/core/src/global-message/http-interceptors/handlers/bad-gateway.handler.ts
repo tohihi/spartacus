@@ -12,7 +12,7 @@ export class BadGatewayHandler extends HttpErrorHandler {
   handleError() {
     this.globalMessageService.add({
       type: GlobalMessageType.MSG_TYPE_ERROR,
-      text: 'A server error occurred. Please try again later.',
+      text: 'globalMessage.serverErrorOccured',
     });
   }
 }

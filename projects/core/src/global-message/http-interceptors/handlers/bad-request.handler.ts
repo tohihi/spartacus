@@ -46,6 +46,6 @@ export class BadRequestHandler extends HttpErrorHandler {
       }
     }
 
-    return errMsg || 'An unknown error occured';
+    return errMsg || 'globalMessage.unknownErrorOccured';
   }
 }

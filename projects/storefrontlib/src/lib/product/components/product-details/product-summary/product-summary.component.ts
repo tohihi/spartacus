@@ -81,7 +81,7 @@ export class ProductSummaryComponent implements OnInit {
   showReviews() {
     // Use translated label for Reviews tab reference
     const reviewsTabLabel = this.translatePipe.transform(
-      'productDetails.label.reviews'
+      'productDetails.reviews'
     );
 
     const tabsComponent = this.getTabsComponent();

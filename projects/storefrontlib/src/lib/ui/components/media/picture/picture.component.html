@@ -16,6 +16,6 @@
   <img
     *ngIf="!imageContainer"
     [src]="missingProductImgSrc"
-    [alt]="missingProductImageAlt"
+    [alt]="missingProductImageAlt | cxTranslate"
   />
 </picture>

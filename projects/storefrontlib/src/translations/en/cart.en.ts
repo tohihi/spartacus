@@ -22,4 +22,7 @@ export const cart = {
     salesTax: 'Sales Tax:',
     total: 'Total:',
   },
+  miniCart: {
+    ariaLabelCart: 'Cart',
+  },
 };

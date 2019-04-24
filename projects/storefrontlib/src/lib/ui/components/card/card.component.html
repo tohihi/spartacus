@@ -12,11 +12,11 @@
   <div class="card-body cx-card-body" [class.cx-card-delete]="editMode">
     <!-- Edit message -->
     <div *ngIf="editMode" class="cx-card-delete-msg">
-      {{ content.deleteMsg }}
+      {{ content.deleteMsg | cxTranslate }}
     </div>
     <!-- Card title -->
     <h4 *ngIf="content.title" class="cx-card-title">
-      {{ content.title }}
+      {{ content.title | cxTranslate }}
     </h4>
     <!-- Card Content -->
     <div class="cx-card-container">
@@ -55,31 +55,31 @@
             *ngSwitchCase="'delete'"
             class="cx-card-link card-link btn-link"
             (click)="delete()"
-            >{{ action.name }}</a
+            >{{ action.name | cxTranslate }}</a
           >
           <a
             *ngSwitchCase="'default'"
             class="cx-card-link card-link btn-link"
             (click)="setDefault()"
-            >{{ action.name }}</a
+            >{{ action.name | cxTranslate }}</a
           >
           <a
             *ngSwitchCase="'send'"
             class="cx-card-link card-link btn-link"
             (click)="send()"
-            >{{ action.name }}</a
+            >{{ action.name | cxTranslate }}</a
           >
           <a
             *ngSwitchCase="'edit'"
             class="card-link btn-link"
             (click)="edit()"
-            >{{ action.name }}</a
+            >{{ action.name | cxTranslate }}</a
           >
           <a
             *ngSwitchDefault
             href="{{ action.link }}"
             class="card-link btn-link"
-            >{{ action.name }}</a
+            >{{ action.name | cxTranslate }}</a
           >
         </div>
       </div>

@@ -1,6 +1,6 @@
 <nav>
   <a *ngFor="let crumb of (crumbs$ | async)" [routerLink]="crumb.link">
-    {{ crumb.label }}
+    {{ crumb.label | cxTranslate }}
   </a>
 </nav>
 <h1>{{ title$ | async }}</h1>

@@ -26,5 +26,7 @@ export const payment = {
     paymentMethods: 'Payment methods',
     newPaymentMethodsAreAddedDuringCheckout:
       'New payment methods are added during checkout.',
+    delete: 'Delete',
+    deleteMsg: 'Are you sure you want to delete this payment method?',
   },
 };

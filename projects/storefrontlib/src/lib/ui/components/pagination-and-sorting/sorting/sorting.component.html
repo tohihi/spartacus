@@ -6,6 +6,10 @@
   [ngModel]="selectedOption"
 >
   <ng-option *ngFor="let sort of sortOptions" [value]="sort.code">{{
-    sort.name ? sort.name : sortLabels ? sortLabels[sort.code] : ''
+    sort.name
+      ? sort.name
+      : sortLabels
+      ? (sortLabels[sort.code] | cxTranslate)
+      : ''
   }}</ng-option>
 </ng-select>

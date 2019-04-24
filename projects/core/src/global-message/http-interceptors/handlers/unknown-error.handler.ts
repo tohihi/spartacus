@@ -12,7 +12,7 @@ export class UnknownErrorHandler extends HttpErrorHandler {
   handleError() {
     this.globalMessageService.add({
       type: GlobalMessageType.MSG_TYPE_ERROR,
-      text: 'An unknown error occured',
+      text: 'globalMessage.unknownErrorOccured',
     });
   }
 }
