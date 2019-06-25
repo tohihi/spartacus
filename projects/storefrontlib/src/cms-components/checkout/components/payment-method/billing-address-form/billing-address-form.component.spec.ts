@@ -26,16 +26,9 @@ describe('BillingAddressFormComponent', () => {
     country: new FormGroup({
       isocode: new FormControl(),
     }),
-    region: new FormGroup({
-      isocodeShort: new FormControl(),
-    }),
   });
   const mockCountry: Country = {
     isocode: 'CA',
-  };
-
-  const mockRegion: Region = {
-    isocodeShort: 'QC',
   };
 
   class MockUserAddressService {
@@ -82,17 +75,6 @@ describe('BillingAddressFormComponent', () => {
 
       component.countrySelected(mockCountry);
       expect(countryField.value).toContain(mockCountry.isocode);
-    });
-  });
-
-  describe('regionSelected', () => {
-    it('should set region isocode after regionSelected was called', () => {
-      component.billingAddress = mockInputBillingAddress;
-      const regionField =
-        component.billingAddress['controls'].region['controls'].isocodeShort;
-
-      component.regionSelected(mockRegion);
-      expect(regionField.value).toContain(mockRegion.isocodeShort);
     });
   });
 });
