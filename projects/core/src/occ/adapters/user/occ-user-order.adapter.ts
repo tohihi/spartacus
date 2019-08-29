@@ -29,6 +29,26 @@ export class OccUserOrderAdapter implements UserOrderAdapter {
     return this.occEndpoints.getEndpoint(orderEndpoint);
   }
 
+  public cancelOrder(userId: string, orderCode: string): Observable<any> {
+    const url = this.occEndpoints.getUrl('orderCancel', {
+      orderId: orderCode,
+    });
+
+    const payload = {
+      entries: [
+        {
+          orderEntryNumber: 0,
+          cancelQuantity: '1',
+          notes: 'Cancelling reason',
+          cancelReason: 'Other',
+        },
+      ],
+      userId: userId,
+    };
+
+    return this.http.post<string>(url, payload);
+  }
+
   public load(userId: string, orderCode: string): Observable<Order> {
     // TODO: Deprecated, remove Issue #4125
     if (!this.featureConfigService.isLevel('1.1')) {

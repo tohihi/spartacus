@@ -39,7 +39,7 @@ describe('OccUserOrderAdapter', () => {
   let occUserOrderAdapter: OccUserOrderAdapter;
   let httpMock: HttpTestingController;
   let converter: ConverterService;
-  let occEnpointsService: OccEndpointsService;
+  let occEndpointsService: OccEndpointsService;
   let featureConfigService: FeatureConfigService;
 
   beforeEach(() => {
@@ -63,14 +63,14 @@ describe('OccUserOrderAdapter', () => {
       HttpTestingController
     >);
     converter = TestBed.get(ConverterService as Type<ConverterService>);
-    occEnpointsService = TestBed.get(OccEndpointsService as Type<
+    occEndpointsService = TestBed.get(OccEndpointsService as Type<
       OccEndpointsService
     >);
     featureConfigService = TestBed.get(FeatureConfigService as Type<
       FeatureConfigService
     >);
     spyOn(converter, 'pipeable').and.callThrough();
-    spyOn(occEnpointsService, 'getUrl').and.callThrough();
+    spyOn(occEndpointsService, 'getUrl').and.callThrough();
   });
 
   afterEach(() => {
@@ -84,7 +84,7 @@ describe('OccUserOrderAdapter', () => {
       httpMock.expectOne((req: HttpRequest<any>) => {
         return req.method === 'GET';
       }, `GET method and url`);
-      expect(occEnpointsService.getUrl).toHaveBeenCalledWith(
+      expect(occEndpointsService.getUrl).toHaveBeenCalledWith(
         'orderHistory',
         {
           userId,
@@ -104,7 +104,7 @@ describe('OccUserOrderAdapter', () => {
       httpMock.expectOne((req: HttpRequest<any>) => {
         return req.method === 'GET';
       }, `GET method`);
-      expect(occEnpointsService.getUrl).toHaveBeenCalledWith(
+      expect(occEndpointsService.getUrl).toHaveBeenCalledWith(
         'orderHistory',
         {
           userId,
@@ -134,7 +134,7 @@ describe('OccUserOrderAdapter', () => {
       httpMock.expectOne((req: HttpRequest<any>) => {
         return req.method === 'GET';
       }, `GET a single order`);
-      expect(occEnpointsService.getUrl).toHaveBeenCalledWith('orderDetail', {
+      expect(occEndpointsService.getUrl).toHaveBeenCalledWith('orderDetail', {
         userId,
         orderId: orderData.code,
       });
@@ -144,6 +144,16 @@ describe('OccUserOrderAdapter', () => {
       occUserOrderAdapter.load(userId, orderData.code).subscribe();
       httpMock.expectOne(req => req.method === 'GET').flush({});
       expect(converter.pipeable).toHaveBeenCalledWith(ORDER_NORMALIZER);
+    });
+  });
+
+  describe('cancelOrder', () => {
+    it('should cancel an order', () => {
+      occUserOrderAdapter.cancelOrder(userId, orderData.code).subscribe();
+      httpMock.expectOne(req => req.method === 'POST').flush({});
+      expect(occEndpointsService.getUrl).toHaveBeenCalledWith('orderCancel', {
+        orderId: orderData.code,
+      });
     });
   });
 
