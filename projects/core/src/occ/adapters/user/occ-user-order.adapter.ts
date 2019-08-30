@@ -19,36 +19,6 @@ export class OccUserOrderAdapter implements UserOrderAdapter {
     protected featureConfigService?: FeatureConfigService
   ) {}
 
-  /**
-   * @deprecated Since 1.1
-   * Use configurable endpoints.
-   * Remove issue: #4125
-   */
-  protected getOrderEndpoint(userId: string): string {
-    const orderEndpoint = 'users/' + userId + '/orders';
-    return this.occEndpoints.getEndpoint(orderEndpoint);
-  }
-
-  public cancelOrder(userId: string, orderCode: string): Observable<any> {
-    const url = this.occEndpoints.getUrl('orderCancel', {
-      orderId: orderCode,
-    });
-
-    const payload = {
-      entries: [
-        {
-          orderEntryNumber: 0,
-          cancelQuantity: '1',
-          notes: 'Cancelling reason',
-          cancelReason: 'Other',
-        },
-      ],
-      userId: userId,
-    };
-
-    return this.http.post<string>(url, payload);
-  }
-
   public load(userId: string, orderCode: string): Observable<Order> {
     // TODO: Deprecated, remove Issue #4125
     if (!this.featureConfigService.isLevel('1.1')) {
@@ -92,6 +62,26 @@ export class OccUserOrderAdapter implements UserOrderAdapter {
     return this.http
       .get<Occ.OrderHistoryList>(url)
       .pipe(this.converter.pipeable(ORDER_HISTORY_NORMALIZER));
+  }
+
+  public cancelOrder(userId: string, orderCode: string): Observable<any> {
+    const url = this.occEndpoints.getUrl('orderCancel', {
+      orderId: orderCode,
+    });
+
+    const payload = {
+      entries: [
+        {
+          orderEntryNumber: 0,
+          cancelQuantity: '1',
+          notes: 'Cancelling reason',
+          cancelReason: 'Other',
+        },
+      ],
+      userId: userId,
+    };
+
+    return this.http.post<string>(url, payload);
   }
 
   /**
@@ -139,5 +129,15 @@ export class OccUserOrderAdapter implements UserOrderAdapter {
     return this.http
       .get<Occ.OrderHistoryList>(url, { params: params })
       .pipe(this.converter.pipeable(ORDER_HISTORY_NORMALIZER));
+  }
+
+  /**
+   * @deprecated Since 1.1
+   * Use configurable endpoints.
+   * Remove issue: #4125
+   */
+  protected getOrderEndpoint(userId: string): string {
+    const orderEndpoint = 'users/' + userId + '/orders';
+    return this.occEndpoints.getEndpoint(orderEndpoint);
   }
 }
