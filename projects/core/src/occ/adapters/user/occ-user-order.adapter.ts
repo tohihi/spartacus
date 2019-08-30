@@ -76,7 +76,8 @@ export class OccUserOrderAdapter implements UserOrderAdapter {
       orderId: orderCode,
     });
 
-    const payload = {
+    const payload: OrderCancellation = {
+      userId: userId,
       entries: [
         {
           orderEntryNumber: 0,
@@ -85,7 +86,6 @@ export class OccUserOrderAdapter implements UserOrderAdapter {
           cancelReason: 'Other',
         },
       ],
-      userId: userId,
     };
 
     return this.http.post<OrderCancellation>(url, payload);

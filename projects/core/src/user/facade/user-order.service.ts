@@ -16,7 +16,7 @@ export class UserOrderService {
   constructor(protected store: Store<StateWithUser | StateWithProcess<void>>) {}
 
   /**
-   * Returns an order's detail
+   * Returns order details from the state
    */
   getOrderDetails(): Observable<Order> {
     return this.store.pipe(select(UsersSelectors.getOrderDetails));
@@ -87,7 +87,7 @@ export class UserOrderService {
   }
 
   /**
-   * Cleaning order list
+   * Cleans the order list
    */
   clearOrderList(): void {
     this.store.dispatch(new UserActions.ClearUserOrders());

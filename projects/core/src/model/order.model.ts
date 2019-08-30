@@ -59,8 +59,20 @@ export interface Consignment {
   trackingID?: string;
 }
 
-export interface OrderCancellation {
+export interface OrderCancellationResponse {
   cancelResult: string;
+}
+
+export interface OrderCancellation {
+  userId: string;
+  entries: OrderCancellationEntry[];
+}
+
+export interface OrderCancellationEntry {
+  orderEntryNumber: number;
+  cancelQuantity: string;
+  notes: string;
+  cancelReason: string;
 }
 
 export interface OrderHistory {
