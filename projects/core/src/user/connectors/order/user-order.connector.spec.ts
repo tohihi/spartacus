@@ -14,6 +14,10 @@ class MockOrderAdapter implements UserOrderAdapter {
   loadHistory = createSpy('UserOrderAdapter.loadHistory').and.callFake(userId =>
     of(`orderHistory-${userId}`)
   );
+
+  cancel = createSpy('UserOrderAdapter.cancel').and.callFake(
+    (userId, orderCode) => of(`cancel-${userId}-${orderCode}`)
+  );
 }
 
 describe('UserOrderConnector', () => {
@@ -50,5 +54,11 @@ describe('UserOrderConnector', () => {
       undefined,
       undefined
     );
+  });
+
+  it('cancel should call adapter', () => {
+    let result;
+    service.cancel('userId', 'orderCode').subscribe(res => (result = res));
+    expect(result).toBe('cancel-userId-orderCode');
   });
 });

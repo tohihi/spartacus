@@ -59,6 +59,10 @@ export interface Consignment {
   trackingID?: string;
 }
 
+export interface OrderCancellation {
+  cancelResult: string;
+}
+
 export interface OrderHistory {
   code?: string;
   guid?: string;

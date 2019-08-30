@@ -23,7 +23,7 @@ export class UserOrderService {
   }
 
   /**
-   * Retrieves order's details
+   * Retrieves order details
    *
    * @param orderCode an order code
    */
@@ -37,7 +37,7 @@ export class UserOrderService {
   }
 
   /**
-   * Clears order's details
+   * Clears order details
    */
   clearOrderDetails(): void {
     this.store.dispatch(new UserActions.ClearOrderDetails());

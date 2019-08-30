@@ -149,7 +149,7 @@ describe('OccUserOrderAdapter', () => {
 
   describe('cancelOrder', () => {
     it('should cancel an order', () => {
-      occUserOrderAdapter.cancelOrder(userId, orderData.code).subscribe();
+      occUserOrderAdapter.cancel(userId, orderData.code).subscribe();
       httpMock.expectOne(req => req.method === 'POST').flush({});
       expect(occEndpointsService.getUrl).toHaveBeenCalledWith('orderCancel', {
         orderId: orderData.code,
