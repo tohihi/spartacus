@@ -5,7 +5,6 @@
     .cx-header {
       border: solid 1px gray;
       padding: 1rem;
-      margin: 0 20%;
     }
 
     .cx-detail-row {
@@ -20,6 +19,12 @@
 
     .cx-detail-value {
       padding: 0;
+    }
+
+    @include media-breakpoint-down(md) {
+      button {
+        margin-top: 1em;
+      }
     }
   }
 

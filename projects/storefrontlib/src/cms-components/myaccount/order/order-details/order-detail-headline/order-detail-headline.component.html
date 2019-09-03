@@ -1,6 +1,6 @@
 <ng-container *ngIf="(order$ | async) as order">
   <div class="row justify-content-center">
-    <div class="cx-header col-lg-6 col-sm-8">
+    <div class="cx-header col-lg-4 col-sm-8">
       <div class="cx-detail-row">
         <div class="col-4 cx-detail-label">
           {{ 'orderDetails.orderId' | cxTranslate }}
@@ -25,5 +25,11 @@
         </div>
       </div>
     </div>
+    <div class="col-lg-4 col-sm-8">
+      <button class="btn btn-primary btn-block" type="button" (click)="cancel()">
+        Cancel order items
+      </button>
+    </div>
   </div>
+
 </ng-container>

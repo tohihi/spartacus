@@ -17,4 +17,8 @@ export class OrderDetailHeadlineComponent implements OnInit {
   ngOnInit() {
     this.order$ = this.orderDetailsService.getOrderDetails();
   }
+
+  cancel() {
+    console.log('Cancel order');
+  }
 }
