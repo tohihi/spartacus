@@ -18,6 +18,7 @@ export const myAccount = {
     statusDisplay_Error: 'Pending',
     statusDisplay_open: 'Open',
     statusDisplay_processing: 'In Process',
+    cancel: 'Cancel order items',
   },
   orderHistory: {
     orderHistory: 'Order history',
