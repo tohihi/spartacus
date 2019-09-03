@@ -5,25 +5,29 @@
     .cx-header {
       border: solid 1px gray;
       padding: 1rem;
+
+      .cx-detail-row {
+        display: flex;
+        flex-wrap: wrap;
+
+        .cx-detail-label {
+          font-weight: bold;
+          padding: 0;
+        }
+
+        .cx-detail-value {
+          padding: 0;
+        }
+      }
     }
 
-    .cx-detail-row {
-      display: flex;
-      flex-wrap: wrap;
+    button {
+      margin-top: 1em;
     }
 
-    .cx-detail-label {
-      font-weight: bold;
-      padding: 0;
-    }
-
-    .cx-detail-value {
-      padding: 0;
-    }
-
-    @include media-breakpoint-down(md) {
+    @include media-breakpoint-up(md) {
       button {
-        margin-top: 1em;
+        margin-top: 0;
       }
     }
   }
