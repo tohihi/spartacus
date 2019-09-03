@@ -2,6 +2,10 @@
   cx-order-details-headline {
     order: 1;
 
+    .row {
+      justify-content: center;
+    }
+
     .cx-header {
       border: solid 1px gray;
       padding: 1rem;
@@ -28,6 +32,11 @@
     @include media-breakpoint-up(md) {
       button {
         margin-top: 0;
+      }
+
+      .row {
+        -webkit-box-pack: justify;
+        justify-content: space-between;
       }
     }
   }
