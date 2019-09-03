@@ -1,6 +1,26 @@
 .AccountPageTemplate {
   cx-order-details-headline {
     order: 1;
+
+    .cx-header {
+      border: solid 1px gray;
+      padding: 1rem;
+      margin: 0 20%;
+    }
+
+    .cx-detail-row {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .cx-detail-label {
+      font-weight: bold;
+      padding: 0;
+    }
+
+    .cx-detail-value {
+      padding: 0;
+    }
   }
 
   cx-order-details-items {
