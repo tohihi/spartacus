@@ -27,15 +27,16 @@
 
     .cx-order-details-footer {
       padding: 0;
+      text-align: center;
     }
 
     button {
-      margin-top: 1em;
+      margin: 1em 0;
     }
 
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up(lg) {
       button {
-        margin-top: 0;
+        margin: 0 0 1em 0;
       }
 
       .row {

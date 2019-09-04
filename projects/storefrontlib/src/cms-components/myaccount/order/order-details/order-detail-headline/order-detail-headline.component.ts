@@ -21,4 +21,8 @@ export class OrderDetailHeadlineComponent implements OnInit {
   cancel() {
     console.log('Cancel order');
   }
+
+  cancelPartial() {
+    console.log('Cance partial order');
+  }
 }

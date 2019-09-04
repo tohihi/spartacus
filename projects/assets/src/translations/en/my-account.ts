@@ -19,6 +19,7 @@ export const myAccount = {
     statusDisplay_open: 'Open',
     statusDisplay_processing: 'In Process',
     cancel: 'Cancel order items',
+    cancelPartial: 'Cancel part of the order',
   },
   orderHistory: {
     orderHistory: 'Order history',
