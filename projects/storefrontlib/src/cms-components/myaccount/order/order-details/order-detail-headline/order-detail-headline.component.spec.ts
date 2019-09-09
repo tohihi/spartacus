@@ -49,7 +49,7 @@ const mockOrder: Order = {
   created: new Date('2019-02-11T13:02:58+0000'),
 };
 
-fdescribe('OrderDetailHeadlineComponent', () => {
+describe('OrderDetailHeadlineComponent', () => {
   let component: OrderDetailHeadlineComponent;
   let fixture: ComponentFixture<OrderDetailHeadlineComponent>;
   let mockOrderDetailsService: OrderDetailsService;
