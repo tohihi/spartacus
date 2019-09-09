@@ -19,20 +19,20 @@
         </div>
         <div class="col-8 cx-detail-value" *ngIf="order?.statusDisplay">
           {{
-          'orderDetails.statusDisplay'
-            | cxTranslate: { context: order?.statusDisplay }
-        }}
+            'orderDetails.statusDisplay'
+              | cxTranslate: { context: order?.statusDisplay }
+          }}
         </div>
       </div>
     </div>
     <div class="cx-order-details-footer col-lg-4 col-sm-8">
-      <button class="btn btn-primary btn-block" type="button" (click)="cancel()">
+      <button
+        class="btn btn-primary btn-block btn-cancel"
+        type="button"
+        (click)="cancel()"
+      >
         {{ 'orderDetails.cancel' | cxTranslate }}
       </button>
-      <a role="link" href="#" (click)="cancelPartial()">
-        {{ 'orderDetails.cancelPartial' | cxTranslate }}
-      </a>
     </div>
   </div>
-
 </ng-container>

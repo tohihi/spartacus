@@ -2,11 +2,9 @@ import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { I18nTestingModule, Order } from '@spartacus/core';
-
 import { of } from 'rxjs';
-
-import { OrderDetailHeadlineComponent } from './order-detail-headline.component';
 import { OrderDetailsService } from '../order-details.service';
+import { OrderDetailHeadlineComponent } from './order-detail-headline.component';
 
 const mockOrder: Order = {
   code: '1',
@@ -51,7 +49,7 @@ const mockOrder: Order = {
   created: new Date('2019-02-11T13:02:58+0000'),
 };
 
-describe('OrderDetailHeadlineComponent', () => {
+fdescribe('OrderDetailHeadlineComponent', () => {
   let component: OrderDetailHeadlineComponent;
   let fixture: ComponentFixture<OrderDetailHeadlineComponent>;
   let mockOrderDetailsService: OrderDetailsService;
@@ -116,5 +114,13 @@ describe('OrderDetailHeadlineComponent', () => {
     expect(element.nativeElement.textContent).toContain(
       mockOrder.statusDisplay
     );
+  });
+
+  it('should display cancel button', () => {
+    fixture.detectChanges();
+    const element: DebugElement = el.query(
+      By.css('.cx-order-details-footer .btn-cancel')
+    );
+    expect(element).toBeTruthy();
   });
 });
