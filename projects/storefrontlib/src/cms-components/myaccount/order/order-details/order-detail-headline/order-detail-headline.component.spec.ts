@@ -81,11 +81,11 @@ describe('OrderDetailHeadlineComponent', () => {
     component.ngOnInit();
   });
 
-  it('should create', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize ', () => {
+  it('should initialize component', () => {
     fixture.detectChanges();
     let order: Order;
     component.order$
@@ -96,31 +96,22 @@ describe('OrderDetailHeadlineComponent', () => {
     expect(order).toEqual(mockOrder);
   });
 
-  it('should order details info bar be rendered', () => {
+  it('should render order details headline', () => {
     fixture.detectChanges();
-    expect(el.query(By.css('.cx-header.row'))).toBeTruthy();
-  });
+    expect(el.query(By.css('.cx-header .cx-detail-row'))).toBeTruthy();
 
-  it('should order details display correct order ID', () => {
-    fixture.detectChanges();
-    const element: DebugElement = el.query(
-      By.css('.cx-detail:first-of-type .cx-detail-value')
+    const codeElement: DebugElement = el.query(
+      By.css('.cx-detail-row:first-of-type .cx-detail-value')
     );
-    expect(element.nativeElement.textContent).toEqual(mockOrder.code);
-  });
+    expect(codeElement.nativeElement.textContent).toEqual(mockOrder.code);
 
-  it('should order details display correct order date', () => {
-    fixture.detectChanges();
-    const element: DebugElement = el.query(
+    const dateElement: DebugElement = el.query(
       By.css('.cx-header div:nth-child(2) > div.cx-detail-value')
     );
-    expect(element.nativeElement.textContent).toEqual('Feb 11, 2019');
-  });
+    expect(dateElement.nativeElement.textContent).toEqual('Feb 11, 2019');
 
-  it('should order details display correct order status', () => {
-    fixture.detectChanges();
     const element: DebugElement = el.query(
-      By.css('.cx-detail:last-of-type .cx-detail-value')
+      By.css('.cx-detail-row:last-of-type .cx-detail-value')
     );
     expect(element.nativeElement.textContent).toContain(
       mockOrder.statusDisplay
