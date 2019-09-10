@@ -33,4 +33,16 @@ export class OrderDetailsService {
       switchMap(() => this.userOrderService.getOrderDetails())
     );
   }
+
+  isOrderCancellable(): Observable<boolean> {
+    return this.orderLoad$.pipe(
+      switchMap(() => this.userOrderService.getOrderDetails()),
+      map(
+        order =>
+          order.status !== 'CANCELLED' &&
+          order.status !== 'SHIPPED' &&
+          order.status !== 'READY'
+      )
+    );
+  }
 }

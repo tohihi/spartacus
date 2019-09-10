@@ -8,7 +8,7 @@ import { OrderDetailHeadlineComponent } from './order-detail-headline.component'
 
 const mockOrder: Order = {
   code: '1',
-  statusDisplay: 'orderDetails.statusDisplay context:Shipped',
+  statusDisplay: 'orderDetails.statusDisplay context:READY',
   deliveryAddress: {
     firstName: 'John',
     lastName: 'Smith',
@@ -59,6 +59,9 @@ describe('OrderDetailHeadlineComponent', () => {
     mockOrderDetailsService = <OrderDetailsService>{
       getOrderDetails() {
         return of(mockOrder);
+      },
+      isOrderCancellable() {
+        return of(true);
       },
     };
 
@@ -116,7 +119,7 @@ describe('OrderDetailHeadlineComponent', () => {
     );
   });
 
-  it('should display cancel button', () => {
+  it('should not display cancel button', () => {
     fixture.detectChanges();
     const element: DebugElement = el.query(
       By.css('.cx-order-details-footer .btn-cancel')

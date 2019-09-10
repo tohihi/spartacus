@@ -6,6 +6,7 @@ import { OrderDetailsService } from './order-details.service';
 
 const mockOrder: Order = {
   code: '1',
+  status: 'SHIPPED',
   statusDisplay: 'Shipped',
   deliveryAddress: {
     firstName: 'John',
@@ -143,5 +144,33 @@ describe('OrderDetailsService', () => {
     expect(userService.clearOrderDetails).toHaveBeenCalled();
     expect(userService.getOrderDetails).toHaveBeenCalled();
     expect(orderDetails).toBe(mockOrder);
+  });
+
+  it('should mark order as non cancellable', () => {
+    spyOn(userService, 'getOrderDetails').and.returnValue(of(mockOrder));
+
+    let isOrderCancellable: boolean;
+
+    service.isOrderCancellable().subscribe(data => (isOrderCancellable = data));
+    expect(userService.getOrderDetails).toHaveBeenCalled();
+
+    expect(isOrderCancellable).toBe(false);
+  });
+
+  it('should mark order as cancellable', () => {
+    const cancellableOrder: Order = {
+      code: '1',
+      status: 'IN_PROCESS',
+      statusDisplay: 'In process',
+    };
+
+    spyOn(userService, 'getOrderDetails').and.returnValue(of(cancellableOrder));
+
+    let isOrderCancellable: boolean;
+
+    service.isOrderCancellable().subscribe(data => (isOrderCancellable = data));
+    expect(userService.getOrderDetails).toHaveBeenCalled();
+
+    expect(isOrderCancellable).toBe(true);
   });
 });
