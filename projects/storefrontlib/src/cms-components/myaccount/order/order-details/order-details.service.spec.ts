@@ -147,12 +147,7 @@ describe('OrderDetailsService', () => {
   });
 
   it('should mark order as non cancellable', () => {
-    spyOn(userService, 'getOrderDetails').and.returnValue(of(mockOrder));
-
-    let isOrderCancellable: boolean;
-
-    service.isOrderCancellable().subscribe(data => (isOrderCancellable = data));
-    expect(userService.getOrderDetails).toHaveBeenCalled();
+    const isOrderCancellable = service.isOrderCancellable(mockOrder);
 
     expect(isOrderCancellable).toBe(false);
   });
@@ -164,12 +159,9 @@ describe('OrderDetailsService', () => {
       statusDisplay: 'In process',
     };
 
-    spyOn(userService, 'getOrderDetails').and.returnValue(of(cancellableOrder));
-
-    let isOrderCancellable: boolean;
-
-    service.isOrderCancellable().subscribe(data => (isOrderCancellable = data));
-    expect(userService.getOrderDetails).toHaveBeenCalled();
+    const isOrderCancellable: boolean = service.isOrderCancellable(
+      cancellableOrder
+    );
 
     expect(isOrderCancellable).toBe(true);
   });

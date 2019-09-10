@@ -60,8 +60,8 @@ describe('OrderDetailHeadlineComponent', () => {
       getOrderDetails() {
         return of(mockOrder);
       },
-      isOrderCancellable() {
-        return of(true);
+      isOrderCancellable(order: Order) {
+        return order.status === undefined;
       },
     };
 

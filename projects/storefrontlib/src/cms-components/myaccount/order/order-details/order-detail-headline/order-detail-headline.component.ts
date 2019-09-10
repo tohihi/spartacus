@@ -15,7 +15,10 @@ export class OrderDetailHeadlineComponent implements OnInit {
 
   ngOnInit() {
     this.order$ = this.orderDetailsService.getOrderDetails();
-    this.isOrderCancellable$ = this.orderDetailsService.isOrderCancellable();
+  }
+
+  isOrderCancellable(order: Order): boolean {
+    return this.orderDetailsService.isOrderCancellable(order);
   }
 
   cancel() {
