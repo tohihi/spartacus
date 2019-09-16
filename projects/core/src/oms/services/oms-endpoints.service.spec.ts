@@ -3,7 +3,7 @@ import { OmsEndpointsService } from './oms-endpoints.service';
 import { TestBed } from '@angular/core/testing';
 import { Type } from '@angular/core';
 
-fdescribe('OmsEndpointsService', () => {
+describe('OmsEndpointsService', () => {
   const cancelEndpointName = 'cancelOrder';
   const omsConfig = {
     backend: {
@@ -29,7 +29,7 @@ fdescribe('OmsEndpointsService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should return empty endpoint when no config', () => {
+  it('should return empty endpoint with invalid config', () => {
     let omsService = new OmsEndpointsService(undefined);
     expect(omsService.getEndpoint(cancelEndpointName)).toBe('');
 
