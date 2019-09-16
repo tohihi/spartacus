@@ -62,4 +62,20 @@ describe('OmsEndpointsService', () => {
       configFragment.prefix + configFragment.endpoints.cancelOrder
     );
   });
+
+  it('should get empty url with invalid endpoint', () => {
+    const omsService = new OmsEndpointsService(undefined);
+    const url = omsService.getUrl('cancelOrder', { orderId: '1' });
+    expect(url).toEqual('');
+  });
+
+  it('should get empty url with invalid params', () => {
+    const url = service.getUrl('cancelOrder', { orderCode: '1' });
+    expect(url).toEqual('');
+  });
+
+  it('should get url', () => {
+    const url = service.getUrl('cancelOrder', { orderId: '1' });
+    expect(url).toEqual('/oms/orders/1/cancel');
+  });
 });
