@@ -3,11 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ORDER_NORMALIZER } from '../../../checkout/connectors/checkout/converters';
 import { FeatureConfigService } from '../../../features-config/services/feature-config.service';
-import {
-  Order,
-  OrderCancellation,
-  OrderHistoryList,
-} from '../../../model/order.model';
+import { Order, OrderHistoryList } from '../../../model/order.model';
 import { ORDER_HISTORY_NORMALIZER } from '../../../user/connectors/order/converters';
 import { UserOrderAdapter } from '../../../user/connectors/order/user-order.adapter';
 import { ConverterService } from '../../../util/converter.service';
@@ -66,29 +62,6 @@ export class OccUserOrderAdapter implements UserOrderAdapter {
     return this.http
       .get<Occ.OrderHistoryList>(url)
       .pipe(this.converter.pipeable(ORDER_HISTORY_NORMALIZER));
-  }
-
-  public cancel(
-    userId: string,
-    orderCode: string
-  ): Observable<OrderCancellation> {
-    const url = this.occEndpoints.getUrl('orderCancel', {
-      orderId: orderCode,
-    });
-
-    const payload: OrderCancellation = {
-      userId: userId,
-      entries: [
-        {
-          orderEntryNumber: 0,
-          cancelQuantity: '1',
-          notes: 'Cancelling reason',
-          cancelReason: 'Other',
-        },
-      ],
-    };
-
-    return this.http.post<OrderCancellation>(url, payload);
   }
 
   /**

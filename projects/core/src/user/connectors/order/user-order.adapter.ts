@@ -1,9 +1,5 @@
 import { Observable } from 'rxjs';
-import {
-  Order,
-  OrderCancellation,
-  OrderHistoryList,
-} from '../../../model/order.model';
+import { Order, OrderHistoryList } from '../../../model/order.model';
 
 export abstract class UserOrderAdapter {
   /**
@@ -28,14 +24,4 @@ export abstract class UserOrderAdapter {
     currentPage: number,
     sort: string
   ): Observable<OrderHistoryList>;
-
-  /**
-   * Cancels a user order
-   * @param userId
-   * @param orderCode
-   */
-  abstract cancel(
-    userId: string,
-    orderCode: string
-  ): Observable<OrderCancellation>;
 }

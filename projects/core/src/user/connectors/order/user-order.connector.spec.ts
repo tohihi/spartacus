@@ -55,10 +55,4 @@ describe('UserOrderConnector', () => {
       undefined
     );
   });
-
-  it('cancel should call adapter', () => {
-    let result;
-    service.cancel('userId', 'orderCode').subscribe(res => (result = res));
-    expect(result).toBe('cancel-userId-orderCode');
-  });
 });

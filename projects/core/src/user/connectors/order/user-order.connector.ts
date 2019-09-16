@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserOrderAdapter } from './user-order.adapter';
-import {
-  Order,
-  OrderHistoryList,
-  OrderCancellation,
-} from '../../../model/order.model';
+import { Order, OrderHistoryList } from '../../../model/order.model';
 
 @Injectable({
   providedIn: 'root',
@@ -24,9 +20,5 @@ export class UserOrderConnector {
     sort?: string
   ): Observable<OrderHistoryList> {
     return this.adapter.loadHistory(userId, pageSize, currentPage, sort);
-  }
-
-  cancel(userId: string, orderCode: string): Observable<OrderCancellation> {
-    return this.adapter.cancel(userId, orderCode);
   }
 }

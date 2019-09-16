@@ -147,16 +147,6 @@ describe('OccUserOrderAdapter', () => {
     });
   });
 
-  describe('cancelOrder', () => {
-    it('should cancel an order', () => {
-      occUserOrderAdapter.cancel(userId, orderData.code).subscribe();
-      httpMock.expectOne(req => req.method === 'POST').flush({});
-      expect(occEndpointsService.getUrl).toHaveBeenCalledWith('orderCancel', {
-        orderId: orderData.code,
-      });
-    });
-  });
-
   /**
    * @deprecated Since 1.1
    * Remove when legacy code is removed.

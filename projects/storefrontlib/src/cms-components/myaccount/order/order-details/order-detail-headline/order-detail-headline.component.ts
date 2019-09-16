@@ -11,7 +11,6 @@ export class OrderDetailHeadlineComponent implements OnInit {
   constructor(private orderDetailsService: OrderDetailsService) {}
 
   order$: Observable<Order>;
-  isOrderCancellable$: Observable<boolean>;
 
   ngOnInit() {
     this.order$ = this.orderDetailsService.getOrderDetails();
@@ -21,7 +20,7 @@ export class OrderDetailHeadlineComponent implements OnInit {
     return this.orderDetailsService.isOrderCancellable(order);
   }
 
-  cancel() {
-    console.log('Cancel order');
+  cancel(order: Order) {
+    this.orderDetailsService.cancelOrder(order).subscribe(console.log);
   }
 }

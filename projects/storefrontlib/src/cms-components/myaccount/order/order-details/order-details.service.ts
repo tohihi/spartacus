@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Order, RoutingService, UserOrderService } from '@spartacus/core';
+import {
+  Order,
+  OrderCancellation,
+  RoutingService,
+  UserOrderConnector,
+  UserOrderService,
+} from '@spartacus/core';
 import { Observable } from 'rxjs';
 import { map, shareReplay, switchMap, tap } from 'rxjs/operators';
 
@@ -10,7 +16,8 @@ export class OrderDetailsService {
 
   constructor(
     private userOrderService: UserOrderService,
-    private routingService: RoutingService
+    private routingService: RoutingService,
+    private userOrderConnector: UserOrderConnector
   ) {
     this.orderCode$ = this.routingService
       .getRouterState()
@@ -39,5 +46,9 @@ export class OrderDetailsService {
     return (
       cancellableStatuses.find(status => order.status === status) === undefined
     );
+  }
+
+  cancelOrder(order: Order): Observable<OrderCancellation> {
+    return this.userOrderConnector.cancel('spartacus', order.code);
   }
 }
