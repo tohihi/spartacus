@@ -1,12 +1,10 @@
 <ng-container *ngIf="(order$ | async) as order">
-  <div class="row">
-    <div class="cx-header col-lg-4 col-sm-8">
-      <div class="cx-detail-row">
-        <div class="col-4 cx-detail-label">
-          {{ 'orderDetails.orderId' | cxTranslate }}
-        </div>
-        <div class="col-8 cx-detail-value">{{ order?.code }}</div>
+  <div class="cx-header row">
+    <div class="cx-detail col-sm-12 col-md-4">
+      <div class="cx-detail-label">
+        {{ 'orderDetails.orderId' | cxTranslate }}
       </div>
+      <div class="col-8 cx-detail-value">{{ order?.code }}</div>
       <div class="cx-detail-row">
         <div class="col-4 cx-detail-label">
           {{ 'orderDetails.placed' | cxTranslate }}

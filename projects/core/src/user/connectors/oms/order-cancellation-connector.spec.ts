@@ -1,20 +1,14 @@
 import { OrderCancellationAdapter } from './order-cancellation.adapter';
 import { OrderCancellationConnector } from './order-cancellation-connector';
 import { TestBed } from '@angular/core/testing';
-import { OrderCancellation } from '../../../model/oms.model';
-import { Observable, of } from 'rxjs';
 import { Type } from '@angular/core';
+import createSpy = jasmine.createSpy;
+import { of } from 'rxjs';
 
 class MockOrderCancellationAdapter implements OrderCancellationAdapter {
-  cancelOrder(
-    userId: string,
-    orderCode: string
-  ): Observable<OrderCancellation> {
-    return of({
-      userId: userId,
-      entries: [],
-    });
-  }
+  cancelOrder = createSpy('OrderCancellationAdapter.cancelOrder').and.callFake(
+    (userId, orderCode) => of(`cancelOrder-${userId}-${orderCode}`)
+  );
 }
 
 describe('OrderCancellationConnector', () => {

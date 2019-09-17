@@ -20,6 +20,20 @@ export const myAccount = {
     statusDisplay_processing: 'In Process',
     cancel: 'Cancel order items',
     cancelPartial: 'Cancel part of the order',
+    consignmentTracking: {
+      action: 'Track package',
+      dialog: {
+        header: 'Tracking Information',
+        shipped: 'Shipped',
+        estimate: 'Estimated Delivery',
+        carrier: 'Delivery Service',
+        trackingId: 'Tracking Number',
+        noTracking:
+          'The package has not been dispatched from the warehouse. ' +
+          'The tracking information will be available after the package is shipped.',
+        loadingHeader: 'Consignment Tracking',
+      },
+    },
   },
   orderHistory: {
     orderHistory: 'Order history',

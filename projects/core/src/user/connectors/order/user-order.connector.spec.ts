@@ -18,6 +18,12 @@ class MockOrderAdapter implements UserOrderAdapter {
   cancel = createSpy('UserOrderAdapter.cancel').and.callFake(
     (userId, orderCode) => of(`cancel-${userId}-${orderCode}`)
   );
+
+  getConsignmentTracking = createSpy(
+    'UserOrderAdapter.getConsignmentTracking'
+  ).and.callFake((orderCode, consignmentCode) =>
+    of(`consignmentTracking-${orderCode}-${consignmentCode}`)
+  );
 }
 
 describe('UserOrderConnector', () => {
@@ -53,6 +59,18 @@ describe('UserOrderConnector', () => {
       undefined,
       undefined,
       undefined
+    );
+  });
+
+  it('getConsignmentTracking should call adapter', () => {
+    let result;
+    service
+      .getConsignmentTracking('orderCode', 'consignmentCode')
+      .subscribe(res => (result = res));
+    expect(result).toBe('consignmentTracking-orderCode-consignmentCode');
+    expect(adapter.getConsignmentTracking).toHaveBeenCalledWith(
+      'orderCode',
+      'consignmentCode'
     );
   });
 });
