@@ -1,4 +1,4 @@
-import { OmsConfig } from '../config/OmsConfig';
+import { OmsConfig } from '../config/oms-config';
 import { OmsEndpointsService } from './oms-endpoints.service';
 import { TestBed } from '@angular/core/testing';
 import { Type } from '@angular/core';

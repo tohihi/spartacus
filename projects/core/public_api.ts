@@ -11,6 +11,7 @@ export * from './src/i18n/index';
 export * from './src/kyma/index';
 export * from './src/model/index';
 export * from './src/occ/index';
+export * from './src/oms/index';
 export * from './src/personalization/index';
 export * from './src/process/index';
 export * from './src/product/index';

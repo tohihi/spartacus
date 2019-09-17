@@ -1,4 +1,4 @@
-import { OmsConfig } from '../config/OmsConfig';
+import { OmsConfig } from './oms-config';
 
 export const defaultOmsConfig: OmsConfig = {
   backend: {

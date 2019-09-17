@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { OmsConfig } from '../config/OmsConfig';
+import { OmsConfig } from '../config/oms-config';
 import { DynamicTemplate } from '../../config/utils/dynamic-template';
 
 @Injectable({

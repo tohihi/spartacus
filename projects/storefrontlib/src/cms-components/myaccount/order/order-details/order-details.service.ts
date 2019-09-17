@@ -3,8 +3,8 @@ import {
   Order,
   OrderCancellation,
   RoutingService,
-  UserOrderConnector,
   UserOrderService,
+  OrderCancellationConnector,
 } from '@spartacus/core';
 import { Observable } from 'rxjs';
 import { map, shareReplay, switchMap, tap } from 'rxjs/operators';
@@ -17,7 +17,7 @@ export class OrderDetailsService {
   constructor(
     private userOrderService: UserOrderService,
     private routingService: RoutingService,
-    private userOrderConnector: UserOrderConnector
+    private orderCancellationConnector: OrderCancellationConnector
   ) {
     this.orderCode$ = this.routingService
       .getRouterState()
@@ -49,6 +49,6 @@ export class OrderDetailsService {
   }
 
   cancelOrder(order: Order): Observable<OrderCancellation> {
-    return this.userOrderConnector.cancel('spartacus', order.code);
+    return this.orderCancellationConnector.cancelOrder('spartacus', order.code);
   }
 }

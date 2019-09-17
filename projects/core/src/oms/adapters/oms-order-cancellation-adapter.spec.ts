@@ -5,14 +5,31 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { OccConfig } from '@spartacus/core';
-import { mockOccModuleConfig } from '../../occ/adapters/user/unit-test.helper';
+import { OmsConfig } from '../config/oms-config';
 import { OmsEndpointsService } from '../services/oms-endpoints.service';
 import { Type } from '@angular/core';
+import createSpy = jasmine.createSpy;
 
-const MockOmsEndpointsService = {
-  getUrl() {
+class MockOmsEndpointsService extends OmsEndpointsService {
+  getEndpoint = createSpy('omsEndpointsService.cancelOrder').and.callFake(
+    () => {
+      return '/order/1/cancel';
+    }
+  );
+
+  getUrl = createSpy('omsEndpointsService.getUrl').and.callFake(() => {
     return 'order/1/cancel';
+  });
+}
+
+const mockOmsConfig: OmsConfig = {
+  backend: {
+    oms: {
+      prefix: 'oms',
+      endpoints: {
+        cancelOrder: 'orders/${orderId}/cancel',
+      },
+    },
   },
 };
 
@@ -20,9 +37,10 @@ describe('OmsOrderCancellationAdapter', () => {
   let httpMock: HttpTestingController;
   let adapter: OmsOrderCancellationAdapter;
   let omsEndpointsService: OmsEndpointsService;
-  let userId: 'warehouseManager';
-  let orderData: {
-    code: '123';
+
+  const userId = 'warehouseManager';
+  const orderData = {
+    code: '123',
   };
 
   beforeEach(() => {
@@ -30,7 +48,7 @@ describe('OmsOrderCancellationAdapter', () => {
       imports: [HttpClientModule, HttpClientTestingModule],
       providers: [
         OmsOrderCancellationAdapter,
-        { provide: OccConfig, useValue: mockOccModuleConfig },
+        { provide: OmsConfig, useValue: mockOmsConfig },
         {
           provide: OmsEndpointsService,
           useClass: MockOmsEndpointsService,
@@ -51,17 +69,15 @@ describe('OmsOrderCancellationAdapter', () => {
     >);
   });
 
-  it('should create an instance', () => {
-    expect(adapter).toBeTruthy();
+  afterEach(() => {
+    httpMock.verify();
   });
 
   describe('cancelOrder', () => {
     it('should cancel an order', () => {
       adapter.cancelOrder(userId, orderData.code).subscribe();
       httpMock.expectOne(req => req.method === 'POST').flush({});
-      expect(omsEndpointsService.getUrl).toHaveBeenCalledWith('orderCancel', {
-        orderId: orderData.code,
-      });
+      expect(omsEndpointsService.getUrl).toHaveBeenCalledWith(orderData.code);
     });
   });
 });
