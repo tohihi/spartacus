@@ -1,6 +1,12 @@
 import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Order, RoutingService, UserOrderService } from '@spartacus/core';
+import {
+  Order,
+  OrderCancellation,
+  OrderCancellationConnector,
+  RoutingService,
+  UserOrderService,
+} from '@spartacus/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { OrderDetailsService } from './order-details.service';
 
@@ -83,6 +89,12 @@ class MockRoutingService {
   }
 }
 
+class MockOrderCancellationConnector {
+  cancelOrder(order): Observable<OrderCancellation> {
+    return of({ userId: 'mockUser', entries: [order] });
+  }
+}
+
 describe('OrderDetailsService', () => {
   let service: OrderDetailsService;
   let userService;
@@ -99,6 +111,10 @@ describe('OrderDetailsService', () => {
         {
           provide: RoutingService,
           useClass: MockRoutingService,
+        },
+        {
+          provide: OrderCancellationConnector,
+          useClass: MockOrderCancellationConnector,
         },
       ],
     });
