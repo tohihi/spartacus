@@ -16,7 +16,9 @@ export class OmsOrderCancellationAdapter implements OrderCancellationAdapter {
     userId: string,
     orderCode: string
   ): Observable<OrderCancellation> {
-    const url = this.omsEndpointsService.getUrl(orderCode);
+    const url = this.omsEndpointsService.getUrl('cancelOrder', {
+      orderId: orderCode,
+    });
 
     const payload: OrderCancellation = {
       userId: userId,
