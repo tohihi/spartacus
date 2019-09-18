@@ -102,7 +102,7 @@ describe('OrderDetailHeadlineComponent', () => {
     expect(el.query(By.css('.cx-header .cx-detail-row'))).toBeTruthy();
 
     const codeElement: DebugElement = el.query(
-      By.css('.cx-detail-row:first-of-type .cx-detail-value')
+      By.css('.cx-header .cx-detail-row:first-of-type .cx-detail-value')
     );
     expect(codeElement.nativeElement.textContent).toEqual(mockOrder.code);
 
