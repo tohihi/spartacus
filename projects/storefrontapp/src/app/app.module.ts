@@ -37,6 +37,9 @@ if (!environment.production) {
           baseUrl: environment.occBaseUrl,
           legacy: false,
         },
+        oms: {
+          baseUrl: environment.occBaseUrl,
+        },
       },
       context: {
         urlParameters: ['baseSite', 'language', 'currency'],

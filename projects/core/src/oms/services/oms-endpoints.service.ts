@@ -9,27 +9,39 @@ export class OmsEndpointsService {
   constructor(private config: OmsConfig) {}
 
   /**
+   * Returns base oms endpoint (baseUrl + prefix)
+   */
+  private getBaseUrl(): string {
+    if (
+      !this.config ||
+      !this.config.backend ||
+      !this.config.backend.oms ||
+      !this.config.backend.oms.baseUrl
+    ) {
+      return '';
+    }
+
+    return this.config.backend.oms.baseUrl;
+  }
+
+  /**
    * Returns an OMS endpoint
    * @param endpoint Name of the endpoint on the config
    * @return endpoint
    */
   getEndpoint(endpoint: string): string {
-    if (
-      !this.config ||
-      !this.config.backend ||
-      !this.config.backend.oms ||
-      !this.config.backend.oms.prefix ||
-      !this.config.backend.oms.endpoints
-    ) {
-      return '';
+    const baseUrl = this.getBaseUrl();
+    if (baseUrl !== '') {
+      let prefix = this.config.backend.oms.prefix;
+      if (prefix) {
+        prefix = this.addStartSlash(prefix);
+        endpoint = this.config.backend.oms.endpoints[endpoint];
+        if (endpoint) {
+          endpoint = this.addStartSlash(endpoint);
+          return baseUrl + prefix + endpoint;
+        }
+      }
     }
-    endpoint = this.config.backend.oms.endpoints[endpoint];
-
-    if (endpoint) {
-      endpoint = this.addStartSlash(endpoint);
-      return this.config.backend.oms.prefix + endpoint;
-    }
-
     return '';
   }
 
@@ -45,7 +57,7 @@ export class OmsEndpointsService {
       if (urlParams) {
         const endpoint = DynamicTemplate.resolve(rawEndpoint, urlParams);
         if (endpoint !== rawEndpoint) {
-          return this.addStartSlash(endpoint);
+          return endpoint;
         }
       }
     }

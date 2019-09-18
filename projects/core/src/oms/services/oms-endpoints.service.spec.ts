@@ -8,9 +8,10 @@ describe('OmsEndpointsService', () => {
   const omsConfig = {
     backend: {
       oms: {
+        baseUrl: 'https://www.spartacus.com',
         prefix: 'oms',
         endpoints: {
-          cancelOrder: '/orders/${orderId}/cancel',
+          cancelOrder: 'orders/${orderId}/cancel',
         },
       },
     },
@@ -59,7 +60,11 @@ describe('OmsEndpointsService', () => {
     const url = service.getEndpoint('cancelOrder');
     const configFragment = omsConfig.backend.oms;
     expect(url).toEqual(
-      configFragment.prefix + configFragment.endpoints.cancelOrder
+      configFragment.baseUrl +
+        '/' +
+        configFragment.prefix +
+        '/' +
+        configFragment.endpoints.cancelOrder
     );
   });
 
@@ -76,6 +81,6 @@ describe('OmsEndpointsService', () => {
 
   it('should get url', () => {
     const url = service.getUrl('cancelOrder', { orderId: '1' });
-    expect(url).toEqual('/oms/orders/1/cancel');
+    expect(url).toEqual('https://www.spartacus.com/oms/orders/1/cancel');
   });
 });
