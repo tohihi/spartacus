@@ -1,4 +1,4 @@
-import { OmsOrderCancellationAdapter } from './oms-order-cancellation.adapter';
+import { OmsOrderManagementAdapter } from './oms-order-management.adapter';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import {
@@ -33,9 +33,9 @@ const mockOmsConfig: OmsConfig = {
   },
 };
 
-describe('OmsOrderCancellationAdapter', () => {
+describe('OmsOrderManagementAdapter', () => {
   let httpMock: HttpTestingController;
-  let adapter: OmsOrderCancellationAdapter;
+  let adapter: OmsOrderManagementAdapter;
   let omsEndpointsService: OmsEndpointsService;
 
   const userId = 'warehouseManager';
@@ -47,7 +47,7 @@ describe('OmsOrderCancellationAdapter', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule, HttpClientTestingModule],
       providers: [
-        OmsOrderCancellationAdapter,
+        OmsOrderManagementAdapter,
         { provide: OmsConfig, useValue: mockOmsConfig },
         {
           provide: OmsEndpointsService,
@@ -56,8 +56,8 @@ describe('OmsOrderCancellationAdapter', () => {
       ],
     });
 
-    adapter = TestBed.get(OmsOrderCancellationAdapter as Type<
-      OmsOrderCancellationAdapter
+    adapter = TestBed.get(OmsOrderManagementAdapter as Type<
+      OmsOrderManagementAdapter
     >);
 
     omsEndpointsService = TestBed.get(OmsEndpointsService as Type<
@@ -77,7 +77,9 @@ describe('OmsOrderCancellationAdapter', () => {
     it('should cancel an order', () => {
       adapter.cancelOrder(userId, orderData.code).subscribe();
       httpMock.expectOne(req => req.method === 'POST').flush({});
-      expect(omsEndpointsService.getUrl).toHaveBeenCalledWith(orderData.code);
+      expect(omsEndpointsService.getUrl).toHaveBeenCalledWith('cancelOrder', {
+        orderId: orderData.code,
+      });
     });
   });
 });

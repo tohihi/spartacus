@@ -1,12 +1,12 @@
 import { Observable } from 'rxjs';
 import { OrderCancellation } from '../../../src/model/oms.model';
 import { Injectable } from '@angular/core';
-import { OrderCancellationAdapter } from '../../user/connectors/oms/order-cancellation.adapter';
+import { OrderManagementAdapter } from '../../user/connectors/oms/order-management.adapter';
 import { HttpClient } from '@angular/common/http';
 import { OmsEndpointsService } from '../services/oms-endpoints.service';
 
 @Injectable()
-export class OmsOrderCancellationAdapter implements OrderCancellationAdapter {
+export class OmsOrderManagementAdapter implements OrderManagementAdapter {
   constructor(
     protected httpClient: HttpClient,
     protected omsEndpointsService: OmsEndpointsService

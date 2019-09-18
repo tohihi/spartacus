@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import {
   Order,
   OrderCancellation,
-  OrderCancellationConnector,
+  OrderManagementConnector,
   RoutingService,
   UserOrderService,
 } from '@spartacus/core';
@@ -113,7 +113,7 @@ describe('OrderDetailsService', () => {
           useClass: MockRoutingService,
         },
         {
-          provide: OrderCancellationConnector,
+          provide: OrderManagementConnector,
           useClass: MockOrderCancellationConnector,
         },
       ],
