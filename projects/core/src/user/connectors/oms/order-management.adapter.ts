@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { OrderCancellation } from '../../../model/oms.model';
+import { OrderCancellationResponse } from '../../../model/oms.model';
 
 export abstract class OrderManagementAdapter {
   /**
@@ -10,5 +10,5 @@ export abstract class OrderManagementAdapter {
   abstract cancelOrder(
     userId: string,
     orderCode: string
-  ): Observable<OrderCancellation>;
+  ): Observable<OrderCancellationResponse>;
 }

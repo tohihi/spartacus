@@ -1,5 +1,8 @@
 import { Observable } from 'rxjs';
-import { OrderCancellation } from '../../../src/model/oms.model';
+import {
+  OrderCancellation,
+  OrderCancellationResponse,
+} from '../../../src/model/oms.model';
 import { Injectable } from '@angular/core';
 import { OrderManagementAdapter } from '../../user/connectors/oms/order-management.adapter';
 import { HttpClient } from '@angular/common/http';
@@ -15,7 +18,7 @@ export class OmsOrderManagementAdapter implements OrderManagementAdapter {
   cancelOrder(
     userId: string,
     orderCode: string
-  ): Observable<OrderCancellation> {
+  ): Observable<OrderCancellationResponse> {
     const url = this.omsEndpointsService.getUrl('cancelOrder', {
       orderId: orderCode,
     });
@@ -32,6 +35,6 @@ export class OmsOrderManagementAdapter implements OrderManagementAdapter {
       ],
     };
 
-    return this.httpClient.post<OrderCancellation>(url, payload);
+    return this.httpClient.post<OrderCancellationResponse>(url, payload);
   }
 }

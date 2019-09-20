@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   Order,
-  OrderCancellation,
+  OrderCancellationResponse,
   OrderManagementConnector,
   CartDataService,
   OCC_USER_ID_ANONYMOUS,
@@ -74,7 +74,7 @@ export class OrderDetailsService {
     );
   }
 
-  cancelOrder(order: Order): Observable<OrderCancellation> {
+  cancelOrder(order: Order): Observable<OrderCancellationResponse> {
     return this.orderManagementConnector.cancelOrder(
       'CustomerSupportManager',
       order.code

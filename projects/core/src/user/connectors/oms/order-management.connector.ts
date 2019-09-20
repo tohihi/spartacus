@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { OrderManagementAdapter } from './order-management.adapter';
 import { Observable } from 'rxjs';
-import { OrderCancellation } from '../../../model/oms.model';
+import { OrderCancellationResponse } from '../../../model/oms.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ export class OrderManagementConnector {
   cancelOrder(
     userId: string,
     orderCode: string
-  ): Observable<OrderCancellation> {
+  ): Observable<OrderCancellationResponse> {
     return this.adapter.cancelOrder(userId, orderCode);
   }
 }
