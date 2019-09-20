@@ -68,7 +68,7 @@ export class OrderDetailsService {
   }
 
   isOrderCancellable(order: Order): boolean {
-    const cancellableStatuses = ['CANCELLED', 'SHIPPED', 'READY'];
+    const cancellableStatuses = ['CANCELLED', 'SHIPPED', 'COMPLETED'];
     return (
       cancellableStatuses.find(status => order.status === status) === undefined
     );

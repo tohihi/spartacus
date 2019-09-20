@@ -202,10 +202,22 @@ describe('OrderDetailsService', () => {
       statusDisplay: 'In process',
     };
 
+    const completedOrder: Order = {
+      code: '1',
+      status: 'COMPLETED',
+      statusDisplay: 'In process',
+    };
+
     const isOrderCancellable: boolean = service.isOrderCancellable(
       cancellableOrder
     );
 
     expect(isOrderCancellable).toBe(true);
+
+    const isOrderCompletedCancellable: boolean = service.isOrderCancellable(
+      completedOrder
+    );
+
+    expect(isOrderCompletedCancellable).toBe(true);
   });
 });
