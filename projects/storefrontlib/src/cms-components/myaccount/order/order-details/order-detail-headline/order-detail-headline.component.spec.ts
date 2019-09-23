@@ -1,10 +1,15 @@
-import { DebugElement } from '@angular/core';
+import { DebugElement, Type } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { I18nTestingModule, Order } from '@spartacus/core';
+import {
+  GlobalMessageService,
+  I18nTestingModule,
+  Order,
+} from '@spartacus/core';
 import { of } from 'rxjs';
 import { OrderDetailsService } from '../order-details.service';
 import { OrderDetailHeadlineComponent } from './order-detail-headline.component';
+import createSpy = jasmine.createSpy;
 
 const mockOrder: Order = {
   code: '1',
@@ -49,81 +54,138 @@ const mockOrder: Order = {
   created: new Date('2019-02-11T13:02:58+0000'),
 };
 
+class MockGlobalMessageService {
+  add = createSpy('MockGlobalMessageService.add');
+}
+
 describe('OrderDetailHeadlineComponent', () => {
   let component: OrderDetailHeadlineComponent;
   let fixture: ComponentFixture<OrderDetailHeadlineComponent>;
   let mockOrderDetailsService: OrderDetailsService;
+  let globalMessageService: GlobalMessageService;
   let el: DebugElement;
 
-  beforeEach(async(() => {
-    mockOrderDetailsService = <OrderDetailsService>{
-      getOrderDetails() {
-        return of(mockOrder);
-      },
-      isOrderCancellable(order: Order) {
-        return order.status === undefined;
-      },
-    };
+  describe('Order details', () => {
+    beforeEach(async(() => {
+      mockOrderDetailsService = <OrderDetailsService>{
+        getOrderDetails() {
+          return of(mockOrder);
+        },
+        isOrderCancellable(order: Order) {
+          return order.status === undefined;
+        },
+      };
 
-    TestBed.configureTestingModule({
-      imports: [I18nTestingModule],
-      providers: [
-        { provide: OrderDetailsService, useValue: mockOrderDetailsService },
-      ],
-      declarations: [OrderDetailHeadlineComponent],
-    }).compileComponents();
-  }));
+      TestBed.configureTestingModule({
+        imports: [I18nTestingModule],
+        providers: [
+          { provide: OrderDetailsService, useValue: mockOrderDetailsService },
+          { provide: GlobalMessageService, useClass: MockGlobalMessageService },
+        ],
+        declarations: [OrderDetailHeadlineComponent],
+      }).compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(OrderDetailHeadlineComponent);
-    el = fixture.debugElement;
+    beforeEach(() => {
+      globalMessageService = TestBed.get(GlobalMessageService as Type<
+        GlobalMessageService
+      >);
+      fixture = TestBed.createComponent(OrderDetailHeadlineComponent);
+      el = fixture.debugElement;
 
-    component = fixture.componentInstance;
-    component.ngOnInit();
+      component = fixture.componentInstance;
+      component.ngOnInit();
+    });
+
+    it('should create component', () => {
+      expect(component).toBeTruthy();
+    });
+
+    it('should initialize component', () => {
+      fixture.detectChanges();
+      let order: Order;
+      component.order$
+        .subscribe(value => {
+          order = value;
+        })
+        .unsubscribe();
+      expect(order).toEqual(mockOrder);
+    });
+
+    it('should render order details headline', () => {
+      fixture.detectChanges();
+      expect(el.query(By.css('.cx-header .cx-detail-row'))).toBeTruthy();
+
+      const codeElement: DebugElement = el.query(
+        By.css('.cx-header .cx-detail-row:first-of-type .cx-detail-value')
+      );
+      expect(codeElement.nativeElement.textContent).toEqual(mockOrder.code);
+
+      const dateElement: DebugElement = el.query(
+        By.css('.cx-header div:nth-child(2) > div.cx-detail-value')
+      );
+      expect(dateElement.nativeElement.textContent).toEqual('Feb 11, 2019');
+
+      const element: DebugElement = el.query(
+        By.css('.cx-detail-row:last-of-type .cx-detail-value')
+      );
+      expect(element.nativeElement.textContent).toContain(
+        mockOrder.statusDisplay
+      );
+    });
+
+    it('should not display cancel button', () => {
+      fixture.detectChanges();
+      const element: DebugElement = el.query(
+        By.css('.cx-order-details-footer .btn-cancel')
+      );
+      expect(element).toBeTruthy();
+    });
   });
 
-  it('should create component', () => {
-    expect(component).toBeTruthy();
-  });
+  describe('Order cancellation', () => {
+    beforeEach(async(() => {
+      mockOrderDetailsService = <OrderDetailsService>{
+        getOrderDetails() {
+          return of(mockOrder);
+        },
+        isOrderCancellable(order: Order) {
+          return order.status === undefined;
+        },
+      };
 
-  it('should initialize component', () => {
-    fixture.detectChanges();
-    let order: Order;
-    component.order$
-      .subscribe(value => {
-        order = value;
-      })
-      .unsubscribe();
-    expect(order).toEqual(mockOrder);
-  });
+      mockOrderDetailsService['cancelOrder'] = createSpy().and.returnValue(
+        of({ cancelResult: 'FULL' })
+      );
 
-  it('should render order details headline', () => {
-    fixture.detectChanges();
-    expect(el.query(By.css('.cx-header .cx-detail-row'))).toBeTruthy();
+      TestBed.configureTestingModule({
+        imports: [I18nTestingModule],
+        providers: [
+          { provide: OrderDetailsService, useValue: mockOrderDetailsService },
+          { provide: GlobalMessageService, useClass: MockGlobalMessageService },
+        ],
+        declarations: [OrderDetailHeadlineComponent],
+      }).compileComponents();
+    }));
 
-    const codeElement: DebugElement = el.query(
-      By.css('.cx-header .cx-detail-row:first-of-type .cx-detail-value')
-    );
-    expect(codeElement.nativeElement.textContent).toEqual(mockOrder.code);
+    beforeEach(() => {
+      globalMessageService = TestBed.get(GlobalMessageService as Type<
+        GlobalMessageService
+      >);
+      fixture = TestBed.createComponent(OrderDetailHeadlineComponent);
+      el = fixture.debugElement;
 
-    const dateElement: DebugElement = el.query(
-      By.css('.cx-header div:nth-child(2) > div.cx-detail-value')
-    );
-    expect(dateElement.nativeElement.textContent).toEqual('Feb 11, 2019');
+      component = fixture.componentInstance;
+      component.ngOnInit();
+    });
 
-    const element: DebugElement = el.query(
-      By.css('.cx-detail-row:last-of-type .cx-detail-value')
-    );
-    expect(element.nativeElement.textContent).toContain(
-      mockOrder.statusDisplay
-    );
-  });
+    it('should cancel order', () => {
+      fixture.detectChanges();
 
-  it('should not display cancel button', () => {
-    fixture.detectChanges();
-    const element: DebugElement = el.query(
-      By.css('.cx-order-details-footer .btn-cancel')
-    );
-    expect(element).toBeTruthy();
+      el.query(
+        By.css('.cx-order-details-footer .btn-cancel')
+      ).nativeElement.click();
+      expect(globalMessageService.add).toHaveBeenCalled();
+    });
   });
 });

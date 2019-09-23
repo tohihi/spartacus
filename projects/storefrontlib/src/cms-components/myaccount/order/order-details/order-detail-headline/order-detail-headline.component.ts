@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Order } from '@spartacus/core';
+import {
+  GlobalMessageService,
+  GlobalMessageType,
+  Order,
+} from '@spartacus/core';
 import { Observable } from 'rxjs';
 import { OrderDetailsService } from '../order-details.service';
 
@@ -8,7 +12,12 @@ import { OrderDetailsService } from '../order-details.service';
   templateUrl: './order-detail-headline.component.html',
 })
 export class OrderDetailHeadlineComponent implements OnInit {
-  constructor(private orderDetailsService: OrderDetailsService) {}
+  constructor(orderDetailsService: OrderDetailsService);
+
+  constructor(
+    private orderDetailsService: OrderDetailsService,
+    protected globalMessageService?: GlobalMessageService
+  ) {}
 
   order$: Observable<Order>;
 
@@ -21,6 +30,13 @@ export class OrderDetailHeadlineComponent implements OnInit {
   }
 
   cancel(order: Order) {
-    this.orderDetailsService.cancelOrder(order).subscribe(console.log);
+    this.orderDetailsService.cancelOrder(order).subscribe(response => {
+      if (response.cancelResult === 'FULL') {
+        this.globalMessageService.add(
+          'Your request for order cancellation has been issued',
+          GlobalMessageType.MSG_TYPE_CONFIRMATION
+        );
+      }
+    });
   }
 }
