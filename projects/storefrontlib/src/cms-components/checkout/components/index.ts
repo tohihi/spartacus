@@ -10,6 +10,8 @@ export * from './checkout-progress/checkout-progress.component';
 export * from './checkout-progress/checkout-progress.module';
 export * from './delivery-mode/delivery-mode.component';
 export * from './delivery-mode/delivery-mode.module';
+export * from './tax-invoice/tax-invoice.component';
+export * from './tax-invoice/tax-invoice.module';
 export * from './payment-method/billing-address-form/billing-address-form.component';
 export * from './payment-method/billing-address-form/billing-address-form.module';
 export * from './payment-method/payment-form/payment-form.component';

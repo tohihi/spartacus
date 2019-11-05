@@ -17,6 +17,12 @@ export const defaultCheckoutConfig: CheckoutConfig = {
         type: [CheckoutStepType.DELIVERY_MODE],
       },
       {
+        id: 'taxInvoice',
+        name: 'checkoutProgress.taxInvoice',
+        routeName: 'checkoutTaxInvoice',
+        type: [CheckoutStepType.TAX_INVOICE],
+      },
+      {
         id: 'paymentDetails',
         name: 'checkoutProgress.paymentDetails',
         routeName: 'checkoutPaymentDetails',

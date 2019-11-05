@@ -40,12 +40,32 @@ export const checkout = {
     standardDelivery: 'Standard Delivery',
     premiumDelivery: 'Premium Delivery',
   },
+  checkoutTaxInvoice: {
+    taxInvoice: 'Tax Invoice',
+    requireTaxInvoice: 'Require Tax Invoice',
+    yes: 'YES',
+    no: 'NO',
+    nameAndCorporate: 'Your name/Corporate name',
+    recipent: {
+      recipentYype: 'Invoice Recipent Type',
+      individual: 'Individual',
+      unit: 'Unit',
+    },
+    category: {
+      invoiceCategory: 'Invoice Category',
+      general: 'General',
+      food: 'Food',
+      electronics: 'Electronics',
+      fashion: 'Fashion',
+    },
+  },
   checkout: {
     backToCart: 'Back to cart',
   },
   checkoutProgress: {
     shippingAddress: 'Shipping Address',
     deliveryMode: 'Delivery mode',
+    taxInvoice: 'Tax invoice',
     paymentDetails: 'Payment details',
     reviewOrder: 'Review order',
   },
