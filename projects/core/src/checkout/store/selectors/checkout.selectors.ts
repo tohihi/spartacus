@@ -14,6 +14,7 @@ import {
   CHECKOUT_FEATURE,
   StateWithCheckout,
 } from '../checkout-state';
+import { TaxInvoice } from '../../../model/tax-invoice.model';
 
 const getDeliveryAddressSelector = (state: CheckoutStepsState) => state.address;
 const getDeliveryModeSelector = (state: CheckoutStepsState) =>
@@ -22,6 +23,7 @@ const getPaymentDetailsSelector = (state: CheckoutStepsState) =>
   state.paymentDetails;
 const getOrderDetailsSelector = (state: CheckoutStepsState) =>
   state.orderDetails;
+const getTaxInvoiceSelector = (state: CheckoutStepsState) => state.taxInvoice;
 
 export const getCheckoutState: MemoizedSelector<
   StateWithCheckout,
@@ -127,4 +129,12 @@ export const getCheckoutDetailsLoaded: MemoizedSelector<
   state =>
     StateLoaderSelectors.loaderSuccessSelector(state) &&
     !StateLoaderSelectors.loaderLoadingSelector(state)
+);
+
+export const getTaxInvoice: MemoizedSelector<
+  StateWithCheckout,
+  TaxInvoice
+> = createSelector(
+  getCheckoutSteps,
+  getTaxInvoiceSelector
 );

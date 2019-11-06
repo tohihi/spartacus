@@ -14,6 +14,7 @@ import { CheckoutConnector } from '../../connectors/checkout/checkout.connector'
 import { CheckoutDeliveryConnector } from '../../connectors/delivery/checkout-delivery.connector';
 import { CheckoutPaymentConnector } from '../../connectors/payment/checkout-payment.connector';
 import { CheckoutActions } from '../actions/index';
+import { CheckoutTaxInvoiceConnector } from '../../connectors/tax-invoice/checkout-tax-invoice.connector';
 
 @Injectable()
 export class CheckoutEffects {
@@ -374,10 +375,56 @@ export class CheckoutEffects {
     })
   );
 
+  @Effect()
+  setTaxInvoice$: Observable<
+    CheckoutActions.SetTaxInvoiceFail | CheckoutActions.SetTaxInvoiceSuccess
+  > = this.actions$.pipe(
+    ofType(CheckoutActions.SET_TAX_INVOICE),
+    map((action: CheckoutActions.SetTaxInvoice) => action.payload),
+    mergeMap(payload => {
+      return this.checkoutTaxInvoiceConnector
+        .setTaxInvoice(payload.userId, payload.cartId, payload.taxInvoice)
+        .pipe(
+          map(() => new CheckoutActions.SetTaxInvoiceSuccess()),
+          catchError(error =>
+            of(
+              new CheckoutActions.SetTaxInvoiceFail(
+                makeErrorSerializable(error)
+              )
+            )
+          )
+        );
+    })
+  );
+
+  @Effect()
+  removeTaxInvoice$: Observable<
+    | CheckoutActions.RemoveTaxInvoiceFail
+    | CheckoutActions.RemoveTaxInvoiceSuccess
+  > = this.actions$.pipe(
+    ofType(CheckoutActions.REMOVE_TAX_INVOICE),
+    map((action: CheckoutActions.RemoveTaxInvoice) => action.payload),
+    mergeMap(payload => {
+      return this.checkoutTaxInvoiceConnector
+        .removeTaxInvoice(payload.userId, payload.cartId)
+        .pipe(
+          map(() => new CheckoutActions.RemoveTaxInvoiceSuccess()),
+          catchError(error =>
+            of(
+              new CheckoutActions.RemoveTaxInvoiceFail(
+                makeErrorSerializable(error)
+              )
+            )
+          )
+        );
+    })
+  );
+
   constructor(
     private actions$: Actions,
     private checkoutDeliveryConnector: CheckoutDeliveryConnector,
     private checkoutPaymentConnector: CheckoutPaymentConnector,
-    private checkoutConnector: CheckoutConnector
+    private checkoutConnector: CheckoutConnector,
+    private checkoutTaxInvoiceConnector: CheckoutTaxInvoiceConnector
   ) {}
 }

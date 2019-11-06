@@ -1706,6 +1706,10 @@ export namespace Occ {
      * @member {Principal} [user]
      */
     user?: Principal;
+    /**
+     * @member {TaxInvoice} [taxInvoice]
+     */
+    taxInvoice?: TaxInvoice;
   }
 
   /**
@@ -2363,6 +2367,10 @@ export namespace Occ {
      * @member {Principal} [user]
      */
     user?: Principal;
+    /**
+     * @member {TaxInvoice} [taxInvoice]
+     */
+    taxInvoice?: TaxInvoice;
   }
 
   /**
@@ -2864,6 +2872,39 @@ export namespace Occ {
      * @member {Voucher[]} [vouchers]
      */
     vouchers?: Voucher[];
+  }
+
+  /**
+   *
+   * An interface representing TaxInvoice.
+   */
+  export interface TaxInvoice {
+    /**
+     * @member {string} [recipientType]
+     */
+    recipientType?: string;
+    /**
+     * @member {string} [recipient]
+     */
+    recipient?: string;
+    /**
+     * @member {string} [taxpayerID]
+     */
+    taxpayerID?: string;
+  }
+  /**
+   *
+   * An interface representing RecipientType.
+   */
+  export interface RecipientType {
+    /**
+     * @member {string} [code]
+     */
+    code: string;
+    /**
+     * @member {string} [type]
+     */
+    type: string;
   }
 
   /**

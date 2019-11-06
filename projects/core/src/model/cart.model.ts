@@ -7,6 +7,7 @@ import {
 } from './order.model';
 import { Address } from './address.model';
 import { Currency } from './misc.model';
+import { TaxInvoice } from './tax-invoice.model';
 
 export interface PromotionResult {
   consumedEntries?: PromotionOrderEntryConsumed[];
@@ -97,6 +98,7 @@ export interface Cart {
   totalTax?: Price;
   totalUnitCount?: number;
   user?: Principal;
+  taxInvoice?: TaxInvoice;
 }
 
 export interface CartModification {

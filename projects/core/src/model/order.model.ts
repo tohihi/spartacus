@@ -9,6 +9,7 @@ import {
   Voucher,
 } from './cart.model';
 import { PointOfService } from './point-of-service.model';
+import { TaxInvoice } from './tax-invoice.model';
 
 export interface DeliveryMode {
   code?: string;
@@ -110,4 +111,5 @@ export interface Order {
   totalTax?: Price;
   unconsignedEntries?: OrderEntry[];
   user?: Principal;
+  taxInvoice?: TaxInvoice;
 }

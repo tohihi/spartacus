@@ -9,6 +9,7 @@ export const initialState: CheckoutStepsState = {
     supported: {},
     selected: '',
   },
+  taxInvoice: {},
   paymentDetails: {},
   orderDetails: {},
 };

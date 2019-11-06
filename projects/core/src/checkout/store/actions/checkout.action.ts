@@ -14,7 +14,10 @@ import {
   SET_PAYMENT_DETAILS_PROCESS_ID,
   SET_DELIVERY_MODE_PROCESS_ID,
   SET_SUPPORTED_DELIVERY_MODE_PROCESS_ID,
+  SET_TAX_INVOICE_PROCESS_ID,
+  REMOVE_TAX_INVOICE_PROCESS_ID,
 } from '../checkout-state';
+import { TaxInvoice } from '../../../model/tax-invoice.model';
 
 export const CLEAR_CHECKOUT_DELIVERY_ADDRESS =
   '[Checkout] Clear Checkout Delivery Address';
@@ -93,6 +96,17 @@ export const LOAD_CHECKOUT_DETAILS_SUCCESS =
   '[Checkout] Load Checkout Details Success';
 
 export const CHECKOUT_CLEAR_MISCS_DATA = '[Checkout] Clear Miscs Data';
+
+export const SET_TAX_INVOICE = '[Checkout] Set Tax Invoice';
+export const SET_TAX_INVOICE_FAIL = '[Checkout] Set Tax Invoice Fail';
+export const SET_TAX_INVOICE_SUCCESS = '[Checkout] Set Tax Invoice Success';
+// export const RESET_SET_TAX_INVOICE_PROCESS =
+//   '[Checkout] Reset Tax Invoice Process';
+
+export const REMOVE_TAX_INVOICE = '[Checkout] Remove Tax Invoice';
+export const REMOVE_TAX_INVOICE_SUCCESS =
+  '[Checkout] Remove Tax Invoice Success';
+export const REMOVE_TAX_INVOICE_FAIL = '[Checkout] Remove Tax Invoice Fail';
 
 export class AddDeliveryAddress implements Action {
   readonly type = ADD_DELIVERY_ADDRESS;
@@ -346,6 +360,50 @@ export class ClearCheckoutDeliveryModeFail implements Action {
   constructor(public payload: any) {}
 }
 
+export class SetTaxInvoice extends StateEntityLoaderActions.EntityLoadAction {
+  readonly type = SET_TAX_INVOICE;
+  constructor(
+    public payload: { userId: string; cartId: string; taxInvoice: TaxInvoice }
+  ) {
+    super(PROCESS_FEATURE, SET_TAX_INVOICE_PROCESS_ID);
+  }
+}
+
+export class SetTaxInvoiceFail extends StateEntityLoaderActions.EntityFailAction {
+  readonly type = SET_TAX_INVOICE_FAIL;
+  constructor(public payload: any) {
+    super(PROCESS_FEATURE, SET_TAX_INVOICE_PROCESS_ID, payload);
+  }
+}
+
+export class SetTaxInvoiceSuccess extends StateEntityLoaderActions.EntitySuccessAction {
+  readonly type = SET_TAX_INVOICE_SUCCESS;
+  constructor() {
+    super(PROCESS_FEATURE, SET_TAX_INVOICE_PROCESS_ID);
+  }
+}
+
+export class RemoveTaxInvoice extends StateEntityLoaderActions.EntityLoadAction {
+  readonly type = REMOVE_TAX_INVOICE;
+  constructor(public payload: { userId: string; cartId: string }) {
+    super(PROCESS_FEATURE, REMOVE_TAX_INVOICE_PROCESS_ID);
+  }
+}
+
+export class RemoveTaxInvoiceFail extends StateEntityLoaderActions.EntityFailAction {
+  readonly type = REMOVE_TAX_INVOICE_FAIL;
+  constructor(public payload: any) {
+    super(PROCESS_FEATURE, REMOVE_TAX_INVOICE_PROCESS_ID, payload);
+  }
+}
+
+export class RemoveTaxInvoiceSuccess extends StateEntityLoaderActions.EntitySuccessAction {
+  readonly type = REMOVE_TAX_INVOICE_SUCCESS;
+  constructor() {
+    super(PROCESS_FEATURE, REMOVE_TAX_INVOICE_PROCESS_ID);
+  }
+}
+
 export type CheckoutAction =
   | AddDeliveryAddress
   | AddDeliveryAddressFail
@@ -383,4 +441,10 @@ export type CheckoutAction =
   | LoadCheckoutDetails
   | LoadCheckoutDetailsFail
   | LoadCheckoutDetailsSuccess
-  | CheckoutClearMiscsData;
+  | CheckoutClearMiscsData
+  | SetTaxInvoice
+  | SetTaxInvoiceFail
+  | SetTaxInvoiceSuccess
+  | RemoveTaxInvoice
+  | RemoveTaxInvoiceFail
+  | RemoveTaxInvoiceSuccess;

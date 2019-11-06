@@ -16,7 +16,8 @@ import { OCC_USER_ID_ANONYMOUS } from '../../utils/occ-constants';
 
 // To be changed to a more optimised params after ticket: C3PO-1076
 const FULL_PARAMS = 'fields=FULL';
-const CHECKOUT_PARAMS = 'deliveryAddress(FULL),deliveryMode,paymentInfo(FULL)';
+const CHECKOUT_PARAMS =
+  'deliveryAddress(FULL),deliveryMode,paymentInfo(FULL),taxInvoice(FULL)';
 const ORDERS_ENDPOINT = '/orders';
 const CARTS_ENDPOINT = '/carts/';
 
