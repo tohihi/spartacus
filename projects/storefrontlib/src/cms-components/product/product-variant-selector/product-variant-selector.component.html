@@ -1,14 +1,16 @@
 <ng-container *ngIf="product$ | async as product">
   <div class="variant-section">
     <cx-style-selector
-      *ngIf="variants[variantType.APPAREL_STYLE]"
+      *ngIf="variants[variantType.STYLE]"
       [product]="product"
-      [variants]="variants[variantType.APPAREL_STYLE]"
+      [variants]="variants[variantType.STYLE]"
+      [qualifier]="variantQualifier.STYLE"
     ></cx-style-selector>
     <cx-size-selector
-      *ngIf="variants[variantType.APPAREL_SIZE]"
+      *ngIf="variants[variantType.SIZE]"
       [product]="product"
-      [variants]="variants[variantType.APPAREL_SIZE]"
+      [variants]="variants[variantType.SIZE]"
+      [qualifier]="variantQualifier.SIZE"
     ></cx-size-selector>
   </div>
 </ng-container>

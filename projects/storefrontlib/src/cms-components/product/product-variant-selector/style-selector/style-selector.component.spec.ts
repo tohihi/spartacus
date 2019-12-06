@@ -16,7 +16,7 @@ const mockVariant: BaseOption = {
     variantOptionQualifiers: [{ value: '123' }],
   },
   options: [],
-  variantType: VariantType.APPAREL_SIZE,
+  variantType: VariantType.SIZE,
 };
 
 @Pipe({
