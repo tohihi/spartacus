@@ -3,10 +3,10 @@ import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot } from 'jasmine-marbles';
 import { Observable, of } from 'rxjs';
-import * as fromStore from '../';
-import { AuthActions } from '../actions/index';
-import { ClientToken } from './../../models/token-types.model';
-import { ClientAuthenticationTokenService } from './../../services/client-authentication/client-authentication-token.service';
+import * as fromStore from '../../../store';
+import { ClientToken } from '../../models/client-token.model';
+import { ClientAuthenticationTokenService } from '../../services/client-authentication/client-authentication-token.service';
+import * as ClientCredentialsActions from '../actions/client-token.action';
 
 const testToken: ClientToken = {
   access_token: 'xxx',
@@ -22,7 +22,7 @@ class ClientAuthenticationTokenServiceMock {
 describe('ClientTokenEffect', () => {
   let clientTokenEffect: fromStore.ClientTokenEffect;
   let clientAuthenticationTokenService: ClientAuthenticationTokenService;
-  let actions$: Observable<AuthActions.ClientTokenAction>;
+  let actions$: Observable<ClientCredentialsActions.ClientTokenAction>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -51,8 +51,10 @@ describe('ClientTokenEffect', () => {
 
   describe('loadClientToken$', () => {
     it('should load a client token', () => {
-      const action = new AuthActions.LoadClientToken();
-      const completition = new AuthActions.LoadClientTokenSuccess(testToken);
+      const action = new ClientCredentialsActions.LoadClientToken();
+      const completition = new ClientCredentialsActions.LoadClientTokenSuccess(
+        testToken
+      );
 
       actions$ = hot('-a', { a: action });
       const expected = cold('-b', { b: completition });

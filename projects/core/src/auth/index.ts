@@ -1,4 +1,5 @@
 export * from './auth.module';
+export * from './client-credentials/index';
 export * from './config/auth-config';
 export * from './facade/auth.service';
 export * from './guards/index';

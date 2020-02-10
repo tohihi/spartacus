@@ -5,9 +5,9 @@ import {
 } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { OccEndpointsService } from '../../../occ/services/occ-endpoints.service';
-import { AuthConfig } from '../../config/auth-config';
-import { ClientToken } from '../../models/token-types.model';
+import { OccEndpointsService } from '../../../../occ/services/occ-endpoints.service';
+import { AuthConfig } from '../../../config/auth-config';
+import { ClientToken } from '../../models/client-token.model';
 import { ClientAuthenticationTokenService } from './client-authentication-token.service';
 
 const token: ClientToken = {

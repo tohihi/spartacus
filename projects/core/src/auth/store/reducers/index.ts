@@ -7,7 +7,7 @@ import {
   MetaReducer,
 } from '@ngrx/store';
 import { loaderReducer } from '../../../state/utils/loader/loader.reducer';
-import { ClientToken } from '../../models/token-types.model';
+import { ClientToken } from '../../client-credentials/models/client-token.model';
 import { occUserIdReducer } from '../../occ-user-id/store/reducers/occ-user-id.reducer';
 import { AuthActions } from '../actions/index';
 import { AuthState, CLIENT_TOKEN_DATA } from '../auth-state';

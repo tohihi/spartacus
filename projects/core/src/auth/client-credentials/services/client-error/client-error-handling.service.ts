@@ -1,11 +1,9 @@
+import { HttpHandler, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler } from '@angular/common/http';
-
 import { Observable } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
-
-import { AuthService } from '../../facade/auth.service';
-import { ClientToken } from '../../models/token-types.model';
+import { AuthService } from '../../../facade/auth.service';
+import { ClientToken } from '../../models/client-token.model';
 
 @Injectable()
 export class ClientErrorHandlingService {

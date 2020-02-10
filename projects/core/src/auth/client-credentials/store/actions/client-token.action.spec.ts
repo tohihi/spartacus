@@ -1,7 +1,7 @@
-import { StateLoaderActions } from '../../../state/utils/index';
-import { CLIENT_TOKEN_DATA } from '../auth-state';
-import { ClientToken } from './../../models/token-types.model';
-import { AuthActions } from './index';
+import { StateLoaderActions } from '../../../../state/utils/index';
+import { CLIENT_TOKEN_DATA } from '../../../store/auth-state';
+import { ClientToken } from '../../models/client-token.model';
+import * as ClientCredentialsActions from '../actions/client-token.action';
 
 const clientToken: ClientToken = {
   access_token: 'xxx',
@@ -13,9 +13,9 @@ const clientToken: ClientToken = {
 describe('Client Token Actions', () => {
   describe('LoadClientToken', () => {
     it('should create the action', () => {
-      const action = new AuthActions.LoadClientToken();
+      const action = new ClientCredentialsActions.LoadClientToken();
       expect({ ...action }).toEqual({
-        type: AuthActions.LOAD_CLIENT_TOKEN,
+        type: ClientCredentialsActions.LOAD_CLIENT_TOKEN,
         meta: StateLoaderActions.loadMeta(CLIENT_TOKEN_DATA),
       });
     });
@@ -24,9 +24,9 @@ describe('Client Token Actions', () => {
   describe('LoadClientTokenFail', () => {
     it('should create the action', () => {
       const error = 'anError';
-      const action = new AuthActions.LoadClientTokenFail(error);
+      const action = new ClientCredentialsActions.LoadClientTokenFail(error);
       expect({ ...action }).toEqual({
-        type: AuthActions.LOAD_CLIENT_TOKEN_FAIL,
+        type: ClientCredentialsActions.LOAD_CLIENT_TOKEN_FAIL,
         payload: error,
         meta: StateLoaderActions.failMeta(CLIENT_TOKEN_DATA, error),
       });
@@ -35,10 +35,12 @@ describe('Client Token Actions', () => {
 
   describe('LoadClientTokenSuccess', () => {
     it('should create the action', () => {
-      const action = new AuthActions.LoadClientTokenSuccess(clientToken);
+      const action = new ClientCredentialsActions.LoadClientTokenSuccess(
+        clientToken
+      );
 
       expect({ ...action }).toEqual({
-        type: AuthActions.LOAD_CLIENT_TOKEN_SUCCESS,
+        type: ClientCredentialsActions.LOAD_CLIENT_TOKEN_SUCCESS,
         payload: clientToken,
         meta: StateLoaderActions.successMeta(CLIENT_TOKEN_DATA),
       });

@@ -8,9 +8,9 @@ import { Type } from '@angular/core';
 import { inject, TestBed } from '@angular/core/testing';
 import { OccConfig } from '@spartacus/core';
 import { Observable, of } from 'rxjs';
-import { InterceptorUtil } from '../../occ/utils/interceptor-util';
-import { AuthService } from '../facade/auth.service';
-import { ClientToken } from './../models/token-types.model';
+import { InterceptorUtil } from '../../../occ/utils/interceptor-util';
+import { AuthService } from '../../facade/auth.service';
+import { ClientToken } from '../models/client-token.model';
 import { ClientTokenInterceptor } from './client-token.interceptor';
 
 const testToken = {

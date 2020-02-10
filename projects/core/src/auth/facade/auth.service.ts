@@ -4,7 +4,10 @@ import { Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 import { OCC_USER_ID_CURRENT } from '../../occ/utils/occ-constants';
 import { LoaderState } from '../../state/utils/loader/loader-state';
-import { ClientToken, UserToken } from '../models/token-types.model';
+import { ClientToken } from '../client-credentials/models/client-token.model';
+import * as ClientCredentialsActions from '../client-credentials/store/actions/client-token.action';
+import * as ClientCredentialsSelectors from '../client-credentials/store/selectors/client-token.selectors';
+import { UserToken } from '../models/token-types.model';
 import { OccUserIdService } from '../occ-user-id/facade/occ-user-id.service';
 import { AuthActions } from '../store/actions/index';
 import { StateWithAuth } from '../store/auth-state';
@@ -93,13 +96,13 @@ export class AuthService {
    */
   getClientToken(): Observable<ClientToken> {
     return this.store.pipe(
-      select(AuthSelectors.getClientTokenState),
+      select(ClientCredentialsSelectors.getClientTokenState),
       filter((state: LoaderState<ClientToken>) => {
         if (this.isClientTokenLoaded(state)) {
           return true;
         } else {
           if (!state.loading) {
-            this.store.dispatch(new AuthActions.LoadClientToken());
+            this.store.dispatch(new ClientCredentialsActions.LoadClientToken());
           }
           return false;
         }
@@ -113,10 +116,10 @@ export class AuthService {
    * The new clientToken is returned.
    */
   refreshClientToken(): Observable<ClientToken> {
-    this.store.dispatch(new AuthActions.LoadClientToken());
+    this.store.dispatch(new ClientCredentialsActions.LoadClientToken());
 
     return this.store.pipe(
-      select(AuthSelectors.getClientTokenState),
+      select(ClientCredentialsSelectors.getClientTokenState),
       filter((state: LoaderState<ClientToken>) =>
         this.isClientTokenLoaded(state)
       ),

@@ -1,6 +1,6 @@
-import { StateLoaderActions } from '../../../state/utils/index';
-import { ClientToken } from '../../models/token-types.model';
-import { CLIENT_TOKEN_DATA } from '../auth-state';
+import { StateLoaderActions } from '../../../../state/utils/index';
+import { CLIENT_TOKEN_DATA } from '../../../store/auth-state';
+import { ClientToken } from '../../models/client-token.model';
 
 export const LOAD_CLIENT_TOKEN = '[Token] Load Client Token';
 export const LOAD_CLIENT_TOKEN_FAIL = '[Token] Load Client Token Fail';

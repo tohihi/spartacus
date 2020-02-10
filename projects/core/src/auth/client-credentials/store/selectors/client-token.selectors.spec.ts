@@ -1,12 +1,12 @@
 import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { select, Store, StoreModule } from '@ngrx/store';
-import { LoaderState } from '../../../state';
-import { ClientToken } from '../../models/token-types.model';
-import { AuthActions } from '../actions/index';
-import { AUTH_FEATURE, StateWithAuth } from '../auth-state';
-import * as fromReducers from '../reducers/index';
-import { AuthSelectors } from '../selectors/index';
+import { LoaderState } from '../../../../state';
+import { AUTH_FEATURE, StateWithAuth } from '../../../store/auth-state';
+import * as fromReducers from '../../../store/reducers/index';
+import { AuthSelectors } from '../../../store/selectors/index';
+import { ClientToken } from '../../models/client-token.model';
+import * as ClientCredentialsActions from '../actions/client-token.action';
 
 const mockClientToken = {
   access_token: 'xxx',
@@ -29,7 +29,9 @@ describe('ClientToken Selectors', () => {
 
   describe('getClientTokenState', () => {
     it('should return the client token state', () => {
-      store.dispatch(new AuthActions.LoadClientTokenSuccess(mockClientToken));
+      store.dispatch(
+        new ClientCredentialsActions.LoadClientTokenSuccess(mockClientToken)
+      );
 
       let result: LoaderState<ClientToken>;
       store
