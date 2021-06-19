@@ -27,7 +27,7 @@
     "@types/shelljs": "^0.8.7",
     "jasmine": "^3.5.0",
     "shelljs": "^0.8.3",
-    "typescript": "~3.8.3"
+    "typescript": "~3.9.9"
   },
   "ng-update": {
     "migrations": "./src/migrations/migrations.json",
