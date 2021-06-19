@@ -3,7 +3,7 @@
   "description": "CommerceWebservicesV2 Library with typescript type definitions and works in node.js and browser javascript.",
   "version": "0.1.1",
   "dependencies": {
-    "ms-rest-js": "~0.12.291"
+    "ms-rest-js": "~0.22.437"
   },
   "keywords": [],
   "license": "MIT",
