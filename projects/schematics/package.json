@@ -18,7 +18,7 @@
     "@angular-devkit/schematics": "^9.1.0",
     "@angular/cdk": "^9.2.0",
     "@angular/pwa": "^0.901.0",
-    "@angular/localize": "^9.1.0",
+    "@angular/localize": "^16.2.10",
     "@nguniversal/express-engine": "^9.1.0",
     "@schematics/angular": "^9.1.0",
     "@schematics/update": "^0.901.0",
